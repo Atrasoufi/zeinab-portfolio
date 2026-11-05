@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { NeonButterfly } from './NeonButterfly';
 import { TRANSLATIONS, Language } from '../data/translations';
-import { Download, Sun, Moon, Menu, X, BookOpen } from 'lucide-react';
+import { Download, Sun, Moon, Menu, X, BookOpen, Film } from 'lucide-react';
 
 interface HeaderProps {
   lang: Language;
@@ -11,6 +11,8 @@ interface HeaderProps {
   onOpenCvModal: () => void;
   onOpenBlogModal: () => void;
   onOpenDjangoModal: () => void;
+  onOpenVideoStudio: () => void;
+  activeSection?: string;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -21,6 +23,8 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenCvModal,
   onOpenBlogModal,
   onOpenDjangoModal,
+  onOpenVideoStudio,
+  activeSection = 'hero',
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const t = TRANSLATIONS[lang];
@@ -33,8 +37,17 @@ export const Header: React.FC<HeaderProps> = ({
     }
   };
 
+  const getNavLinkClass = (sectionId: string) => {
+    const isActive = activeSection === sectionId;
+    return `flex items-center gap-2 px-3.5 py-1.5 text-xs font-semibold rounded-full transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF85C0] ${
+      isActive
+        ? 'text-white bg-[#F12D91]/25 border border-[#F12D91]/50 shadow-[0_0_12px_rgba(241,45,145,0.3)]'
+        : 'text-[#F8ECFA] hover:text-[#FF85C0] hover:bg-[#F12D91]/10 border border-transparent'
+    }`;
+  };
+
   return (
-    <header className="sticky top-0 z-40 w-full backdrop-blur-xl bg-[#08040D]/80 border-b border-[#F12D91]/20 transition-all">
+    <header className="sticky top-8 z-40 w-full backdrop-blur-xl bg-[#08040D]/80 border-b border-[#F12D91]/20 transition-all">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         {/* Brand Logo */}
         <a
@@ -65,7 +78,7 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             type="button"
             onClick={() => handleNavClick('hero')}
-            className="flex items-center gap-2 px-4 py-1.5 text-xs font-semibold text-white bg-[#F12D91]/25 border border-[#F12D91]/50 rounded-full transition-all shadow-[0_0_12px_rgba(241,45,145,0.3)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF85C0]"
+            className={getNavLinkClass('hero')}
           >
             <span aria-hidden="true">⌂</span>
             <span>{t.nav.home}</span>
@@ -73,7 +86,7 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             type="button"
             onClick={() => handleNavClick('projects')}
-            className="flex items-center gap-2 px-3.5 py-1.5 text-xs font-medium text-[#F8ECFA] hover:text-[#FF85C0] hover:bg-[#F12D91]/10 rounded-full transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF85C0]"
+            className={getNavLinkClass('projects')}
           >
             <span aria-hidden="true">📁</span>
             <span>{t.nav.projects}</span>
@@ -81,23 +94,23 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             type="button"
             onClick={() => handleNavClick('skills')}
-            className="flex items-center gap-2 px-3.5 py-1.5 text-xs font-medium text-[#F8ECFA] hover:text-[#FF85C0] hover:bg-[#F12D91]/10 rounded-full transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF85C0]"
+            className={getNavLinkClass('skills')}
           >
             <span aria-hidden="true">&lt;/&gt;</span>
             <span>{t.nav.skills}</span>
           </button>
           <button
             type="button"
-            onClick={() => handleNavClick('about')}
-            className="flex items-center gap-2 px-3.5 py-1.5 text-xs font-medium text-[#F8ECFA] hover:text-[#FF85C0] hover:bg-[#F12D91]/10 rounded-full transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF85C0]"
+            onClick={() => handleNavClick('education')}
+            className={getNavLinkClass('education')}
           >
-            <span aria-hidden="true">👤</span>
-            <span>{t.nav.about}</span>
+            <span aria-hidden="true">🎓</span>
+            <span>{lang === 'fa' ? 'تحصیلات' : 'Education'}</span>
           </button>
           <button
             type="button"
             onClick={onOpenBlogModal}
-            className="flex items-center gap-2 px-3.5 py-1.5 text-xs font-medium text-[#F8ECFA] hover:text-[#FF85C0] hover:bg-[#F12D91]/10 rounded-full transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF85C0]"
+            className="flex items-center gap-2 px-3.5 py-1.5 text-xs font-medium text-[#F8ECFA] hover:text-[#FF85C0] hover:bg-[#F12D91]/10 rounded-full transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF85C0] border border-transparent"
           >
             <span aria-hidden="true">📖</span>
             <span>{t.nav.blog}</span>
@@ -105,7 +118,7 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             type="button"
             onClick={() => handleNavClick('contact')}
-            className="flex items-center gap-2 px-3.5 py-1.5 text-xs font-medium text-[#F8ECFA] hover:text-[#FF85C0] hover:bg-[#F12D91]/10 rounded-full transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF85C0]"
+            className={getNavLinkClass('contact')}
           >
             <span aria-hidden="true">✉</span>
             <span>{t.nav.contact}</span>
@@ -114,6 +127,20 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Right Action Tools: Language, Theme & Download CV */}
         <div className="hidden sm:flex items-center gap-3">
+          {/* AI Video Studio Button */}
+          <button
+            type="button"
+            onClick={onOpenVideoStudio}
+            className="px-3 py-1.5 rounded-lg bg-[#160D20] border border-[#F12D91]/40 text-[#FF85C0] hover:border-[#FF85C0] hover:text-white text-xs font-mono transition-all flex items-center gap-1.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF85C0]"
+            title="Open Gemini Omni AI Video Studio"
+            aria-label="Open Gemini Omni AI Video Studio"
+            aria-haspopup="dialog"
+          >
+            <Film size={14} aria-hidden="true" />
+            <span className="hidden xl:inline">{lang === 'fa' ? 'استودیو ویدیو هوش مصنوعی' : 'AI Video Studio'}</span>
+            <span className="xl:hidden">{lang === 'fa' ? 'ویدیو AI' : 'AI Video'}</span>
+          </button>
+
           {/* Django Architecture Inspector Button */}
           <button
             type="button"
@@ -233,6 +260,16 @@ export const Header: React.FC<HeaderProps> = ({
               className="text-left rtl:text-right px-3 py-2 text-sm font-medium text-white hover:bg-[#F12D91]/15 rounded-lg"
             >
               {t.nav.contact}
+            </button>
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                onOpenVideoStudio();
+              }}
+              className="text-left rtl:text-right px-3 py-2 text-sm font-medium text-[#FF85C0] hover:bg-[#F12D91]/15 rounded-lg flex items-center gap-2"
+            >
+              <Film size={16} aria-hidden="true" />
+              <span>{lang === 'fa' ? 'استودیو ویدیو هوش مصنوعی (Gemini)' : 'AI Video Studio (Gemini Omni)'}</span>
             </button>
           </div>
 

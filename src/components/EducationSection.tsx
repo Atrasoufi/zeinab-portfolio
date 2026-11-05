@@ -1,19 +1,34 @@
 import React from 'react';
 import { EDUCATION_DATA } from '../data/portfolioData';
 import { TRANSLATIONS, Language } from '../data/translations';
+import { AmbientCinematicBackground } from './AmbientCinematicBackground';
 import { GraduationCap, BookOpen, Award, CheckCircle2 } from 'lucide-react';
 
 interface EducationSectionProps {
   lang: Language;
+  videoUrl?: string | null;
+  onOpenVideoStudio?: (mode?: 'text' | 'image') => void;
 }
 
-export const EducationSection: React.FC<EducationSectionProps> = ({ lang }) => {
+export const EducationSection: React.FC<EducationSectionProps> = ({
+  lang,
+  videoUrl,
+  onOpenVideoStudio,
+}) => {
   const t = TRANSLATIONS[lang];
 
   return (
-    <section id="education" className="py-12">
+    <section id="education" className="py-12 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="glass-panel rounded-3xl p-6 sm:p-9 relative overflow-hidden">
+          {/* Ambient Cinematic Looping Background Layer */}
+          <AmbientCinematicBackground
+            lang={lang}
+            videoUrl={videoUrl}
+            onOpenVideoStudio={onOpenVideoStudio}
+          />
+
+          <div className="relative z-10">
           {/* Header */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-6 border-b border-[#F12D91]/20">
             <div className="flex items-center gap-3">
@@ -110,6 +125,7 @@ export const EducationSection: React.FC<EducationSectionProps> = ({ lang }) => {
               </div>
             </div>
           </div>
+        </div>
         </div>
       </div>
     </section>

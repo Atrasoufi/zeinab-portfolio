@@ -7,6 +7,8 @@ import { EducationSection } from './components/EducationSection';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { SparkleCanvas } from './components/SparkleCanvas';
+import { ScrollProgressBar } from './components/ScrollProgressBar';
+import { useScrollProgress } from './hooks/useScrollProgress';
 
 // Modals
 import { ProjectModal } from './components/ProjectModal';
@@ -16,6 +18,8 @@ import { BlogModal } from './components/BlogModal';
 import { GithubModal } from './components/GithubModal';
 import { SkillDetailModal } from './components/SkillDetailModal';
 import { DjangoArchitectureModal } from './components/DjangoArchitectureModal';
+import { AIVideoStudioModal } from './components/AIVideoStudioModal';
+import { InteractiveThreeScene } from './components/InteractiveThreeScene';
 
 import { ProjectItem, PERSONAL_INFO } from './data/portfolioData';
 import { Language } from './data/translations';
@@ -23,6 +27,7 @@ import { Language } from './data/translations';
 export default function App() {
   const [lang, setLang] = useState<Language>('en');
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+  const { progress, activeSection } = useScrollProgress();
 
   // Modal visibility states
   const [selectedProject, setSelectedProject] = useState<ProjectItem | null>(null);
@@ -32,6 +37,12 @@ export default function App() {
   const [isGithubOpen, setIsGithubOpen] = useState(false);
   const [isDjangoOpen, setIsDjangoOpen] = useState(false);
   const [selectedSkillName, setSelectedSkillName] = useState<string | null>(null);
+  const [isVideoStudioOpen, setIsVideoStudioOpen] = useState(false);
+  const [videoStudioInitialMode, setVideoStudioInitialMode] = useState<'image' | 'text'>('image');
+
+  // Video loop states
+  const [heroVideoUrl, setHeroVideoUrl] = useState<string | null>(null);
+  const [ambientVideoUrl, setAmbientVideoUrl] = useState<string | null>(null);
 
   // Sync document language, direction, and title
   useEffect(() => {
@@ -57,7 +68,14 @@ export default function App() {
   // Lock body scroll whenever any modal is open
   useEffect(() => {
     const isAnyModalOpen = Boolean(
-      selectedProject || isAboutOpen || isCvOpen || isBlogOpen || isGithubOpen || isDjangoOpen || selectedSkillName
+      selectedProject ||
+        isAboutOpen ||
+        isCvOpen ||
+        isBlogOpen ||
+        isGithubOpen ||
+        isDjangoOpen ||
+        selectedSkillName ||
+        isVideoStudioOpen
     );
     if (isAnyModalOpen) {
       const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
@@ -73,7 +91,16 @@ export default function App() {
       document.body.style.overflow = '';
       document.body.style.paddingRight = '';
     };
-  }, [selectedProject, isAboutOpen, isCvOpen, isBlogOpen, isGithubOpen, isDjangoOpen, selectedSkillName]);
+  }, [
+    selectedProject,
+    isAboutOpen,
+    isCvOpen,
+    isBlogOpen,
+    isGithubOpen,
+    isDjangoOpen,
+    selectedSkillName,
+    isVideoStudioOpen,
+  ]);
 
   const handleToggleLang = () => {
     setLang((prev) => (prev === 'en' ? 'fa' : 'en'));
@@ -93,6 +120,11 @@ export default function App() {
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const handleOpenVideoStudio = (mode: 'image' | 'text' = 'image') => {
+    setVideoStudioInitialMode(mode);
+    setIsVideoStudioOpen(true);
+  };
+
   return (
     <div className="relative min-h-screen bg-[var(--bg-main)] text-[var(--color-text-main)] overflow-x-hidden transition-colors duration-300">
       {/* Skip to Main Content Link for Keyboard / Screen Reader Users (WCAG 2.4.1) */}
@@ -106,6 +138,13 @@ export default function App() {
       {/* Background 2D Star & Sparkle Particle Canvas */}
       <SparkleCanvas />
 
+      {/* Subtle Viewport Top Scroll Progress Bar */}
+      <ScrollProgressBar
+        lang={lang}
+        progress={progress}
+        activeSection={activeSection}
+      />
+
       {/* Top Navigation */}
       <Header
         lang={lang}
@@ -115,6 +154,8 @@ export default function App() {
         onOpenCvModal={() => setIsCvOpen(true)}
         onOpenBlogModal={() => setIsBlogOpen(true)}
         onOpenDjangoModal={() => setIsDjangoOpen(true)}
+        onOpenVideoStudio={() => handleOpenVideoStudio('image')}
+        activeSection={activeSection}
       />
 
       {/* Main Content Sections */}
@@ -123,6 +164,8 @@ export default function App() {
           lang={lang}
           onExploreProjects={handleScrollToProjects}
           onOpenGithubModal={() => setIsGithubOpen(true)}
+          onOpenVideoStudio={handleOpenVideoStudio}
+          heroVideoUrl={heroVideoUrl}
         />
 
         <BentoGridFirstRow
@@ -138,7 +181,18 @@ export default function App() {
           onSelectProject={(project) => setSelectedProject(project)}
         />
 
-        <EducationSection lang={lang} />
+        {/* Interactive 3D Cyber Core Experience (Three.js PBR) */}
+        <section id="interactive-3d" className="py-2">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <InteractiveThreeScene lang={lang} />
+          </div>
+        </section>
+
+        <EducationSection
+          lang={lang}
+          videoUrl={ambientVideoUrl}
+          onOpenVideoStudio={handleOpenVideoStudio}
+        />
 
         <ContactSection lang={lang} />
       </main>
@@ -191,6 +245,15 @@ export default function App() {
         isOpen={isDjangoOpen}
         lang={lang}
         onClose={() => setIsDjangoOpen(false)}
+      />
+
+      <AIVideoStudioModal
+        isOpen={isVideoStudioOpen}
+        lang={lang}
+        onClose={() => setIsVideoStudioOpen(false)}
+        initialMode={videoStudioInitialMode}
+        onApplyToHero={(url) => setHeroVideoUrl(url)}
+        onApplyToBackground={(url) => setAmbientVideoUrl(url)}
       />
     </div>
   );

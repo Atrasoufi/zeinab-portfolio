@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { NeonButterfly } from './NeonButterfly';
+import { CinematicHeroCharacter } from './CinematicHeroCharacter';
 import { PERSONAL_INFO, CORE_TECH_BADGES } from '../data/portfolioData';
 import { TRANSLATIONS, Language } from '../data/translations';
 import { ArrowRight, Sparkles, Copy, Check, Play, Terminal, ExternalLink, Heart } from 'lucide-react';
@@ -8,12 +9,16 @@ interface HeroSectionProps {
   lang: Language;
   onExploreProjects: () => void;
   onOpenGithubModal: () => void;
+  onOpenVideoStudio: (initialMode?: 'image' | 'text') => void;
+  heroVideoUrl?: string | null;
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({
   lang,
   onExploreProjects,
   onOpenGithubModal,
+  onOpenVideoStudio,
+  heroVideoUrl,
 }) => {
   const [copied, setCopied] = useState(false);
   const [testingResponse, setTestingResponse] = useState(false);
@@ -258,35 +263,13 @@ class Developer(APIView):
             </div>
           </div>
 
-          {/* RIGHT COLUMN: Illustrated Developer with Glowing Headphones (Integrated Ambient Artwork) */}
+          {/* RIGHT COLUMN: Cinematic Illustrated Developer Character (Interactive Visual Experience) */}
           <div className="lg:col-span-3 z-10 flex flex-col items-center justify-center relative">
-            {/* Ambient Backlight Glow */}
-            <div className="absolute -inset-4 rounded-full bg-gradient-to-tr from-[#F12D91]/35 via-[#B84DFF]/25 to-transparent blur-3xl transform pointer-events-none" />
-
-            {/* Floating Neon Butterfly hovering near character */}
-            <div className="absolute -top-3 right-4 sm:right-6 z-20 pointer-events-none animate-float select-none">
-              <img
-                src="/public/assets/portfolio/card_butterfly_trans.png"
-                alt=""
-                className="w-16 h-16 sm:w-20 sm:h-20 object-contain filter drop-shadow-[0_0_15px_#F12D91] opacity-90"
-                style={{ mixBlendMode: 'screen' }}
-              />
-            </div>
-
-            {/* Seamless Character Illustration matching master reference */}
-            <div className="relative w-full max-w-[320px] sm:max-w-[360px] flex items-center justify-center select-none group">
-              <img
-                src="/public/assets/portfolio/hero_girl_clean.png"
-                alt="Zeinab Soufi - Backend Developer Illustration"
-                className="w-full h-auto object-contain filter drop-shadow-[0_0_30px_rgba(241,45,145,0.45)] transition-transform duration-500 group-hover:scale-[1.02]"
-                style={{
-                  maskImage:
-                    'radial-gradient(ellipse 92% 90% at 52% 48%, black 68%, transparent 100%)',
-                  WebkitMaskImage:
-                    'radial-gradient(ellipse 92% 90% at 52% 48%, black 68%, transparent 100%)',
-                }}
-              />
-            </div>
+            <CinematicHeroCharacter
+              lang={lang}
+              onOpenVideoStudio={onOpenVideoStudio}
+              generatedVideoUrl={heroVideoUrl}
+            />
           </div>
 
         </div>
