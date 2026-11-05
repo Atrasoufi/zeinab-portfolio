@@ -40,14 +40,24 @@ export const BentoGridFirstRow: React.FC<BentoGridFirstRowProps> = ({
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {/* CARD 1: GitHub Activity */}
           <div
+            role="button"
+            tabIndex={0}
             onClick={onOpenGithubModal}
-            className="glass-panel rounded-3xl p-6 relative flex flex-col justify-between cursor-pointer group hover:-translate-y-1"
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                onOpenGithubModal();
+              }
+            }}
+            aria-haspopup="dialog"
+            aria-label="Open GitHub activity overview and verified repositories dialog"
+            className="glass-panel rounded-3xl p-6 relative flex flex-col justify-between cursor-pointer group hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF85C0]"
           >
             <div>
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2.5 text-[#FF85C0]">
                   <div className="p-2 rounded-xl bg-[#221332] border border-[#F12D91]/30">
-                    <Github size={20} />
+                    <Github size={20} aria-hidden="true" />
                   </div>
                   <h3 className="font-bold text-base font-['Outfit'] tracking-wide text-white">
                     {t.bento1.githubActivity}
@@ -55,6 +65,7 @@ export const BentoGridFirstRow: React.FC<BentoGridFirstRowProps> = ({
                 </div>
                 <ArrowUpRight
                   size={18}
+                  aria-hidden="true"
                   className="text-[#BDA9C9] group-hover:text-[#FF85C0] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all"
                 />
               </div>
@@ -74,7 +85,7 @@ export const BentoGridFirstRow: React.FC<BentoGridFirstRowProps> = ({
 
             {/* Neon Pink Activity Bar Chart */}
             <div className="mt-6 pt-4 border-t border-[#F12D91]/20">
-              <div className="flex items-end justify-between gap-1.5 h-16">
+              <div className="flex items-end justify-between gap-1.5 h-16" role="img" aria-label="30-day commit activity frequency chart">
                 {GITHUB_ACTIVITY_DATA.bars.map((val, index) => {
                   const heightPercent = Math.max(20, Math.min(100, (val / 25) * 100));
                   const isHovered = hoveredBarIndex === index;
@@ -103,7 +114,7 @@ export const BentoGridFirstRow: React.FC<BentoGridFirstRowProps> = ({
                   );
                 })}
               </div>
-              <div className="mt-2 flex items-center justify-between text-[10px] font-mono text-[#8E79A5]">
+              <div className="mt-2 flex items-center justify-between text-[10px] font-mono text-[#BDA9C9]">
                 <span>30d ago</span>
                 <span>Today</span>
               </div>
@@ -116,7 +127,7 @@ export const BentoGridFirstRow: React.FC<BentoGridFirstRowProps> = ({
               <div className="flex items-center justify-between mb-1">
                 <div className="flex items-center gap-2.5 text-[#D58BFF]">
                   <div className="p-2 rounded-xl bg-[#221332] border border-[#B84DFF]/30">
-                    <Code2 size={20} />
+                    <Code2 size={20} aria-hidden="true" />
                   </div>
                   <h3 className="font-bold text-base font-['Outfit'] tracking-wide text-white">
                     {t.bento1.mySkills}
@@ -135,8 +146,11 @@ export const BentoGridFirstRow: React.FC<BentoGridFirstRowProps> = ({
                 {['Python', 'Django', 'DRF', 'PostgreSQL'].map((skill) => (
                   <button
                     key={skill}
+                    type="button"
                     onClick={() => onSelectSkill(skill)}
-                    className="px-3 py-1.5 rounded-xl bg-[#1A0E26] border border-[#F12D91]/35 hover:border-[#FF85C0] hover:bg-[#F12D91]/20 text-xs font-semibold font-mono text-[#F8ECFA] transition-all hover:scale-105 active:scale-95 shadow-[0_0_10px_rgba(241,45,145,0.15)] focus:outline-none"
+                    aria-label={`View technical depth and details for ${skill}`}
+                    aria-haspopup="dialog"
+                    className="px-3 py-1.5 rounded-xl bg-[#1A0E26] border border-[#F12D91]/35 hover:border-[#FF85C0] hover:bg-[#F12D91]/20 text-xs font-semibold font-mono text-[#F8ECFA] transition-all hover:scale-105 active:scale-95 shadow-[0_0_10px_rgba(241,45,145,0.15)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF85C0]"
                   >
                     {skill}
                   </button>
@@ -146,8 +160,11 @@ export const BentoGridFirstRow: React.FC<BentoGridFirstRowProps> = ({
                 {['Docker', 'Git', 'Linux', 'Celery'].map((skill) => (
                   <button
                     key={skill}
+                    type="button"
                     onClick={() => onSelectSkill(skill)}
-                    className="px-3 py-1.5 rounded-xl bg-[#1A0E26] border border-[#B84DFF]/35 hover:border-[#D58BFF] hover:bg-[#B84DFF]/20 text-xs font-semibold font-mono text-[#F8ECFA] transition-all hover:scale-105 active:scale-95 shadow-[0_0_10px_rgba(184,77,255,0.15)] focus:outline-none"
+                    aria-label={`View technical depth and details for ${skill}`}
+                    aria-haspopup="dialog"
+                    className="px-3 py-1.5 rounded-xl bg-[#1A0E26] border border-[#B84DFF]/35 hover:border-[#D58BFF] hover:bg-[#B84DFF]/20 text-xs font-semibold font-mono text-[#F8ECFA] transition-all hover:scale-105 active:scale-95 shadow-[0_0_10px_rgba(184,77,255,0.15)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF85C0]"
                   >
                     {skill}
                   </button>
@@ -169,7 +186,8 @@ export const BentoGridFirstRow: React.FC<BentoGridFirstRowProps> = ({
             {/* Glowing Neon Butterfly from reference design (transparent with screen blend mode) */}
             <img
               src="/public/assets/portfolio/card_butterfly_trans.png"
-              alt="Glowing Neon Butterfly"
+              alt=""
+              aria-hidden="true"
               className="absolute top-2 right-2 rtl:right-auto rtl:left-2 w-28 h-28 object-contain pointer-events-none drop-shadow-[0_0_20px_#F12D91] group-hover:scale-105 transition-transform opacity-95"
               style={{ mixBlendMode: 'screen' }}
             />
@@ -177,7 +195,7 @@ export const BentoGridFirstRow: React.FC<BentoGridFirstRowProps> = ({
             <div>
               <div className="flex items-center gap-2.5 text-[#FF85C0] mb-4">
                 <div className="p-2 rounded-xl bg-[#221332] border border-[#F12D91]/30">
-                  <User size={20} />
+                  <User size={20} aria-hidden="true" />
                 </div>
                 <h3 className="font-bold text-base font-['Outfit'] tracking-wide text-white">
                   {t.bento1.aboutMe}
@@ -196,24 +214,36 @@ export const BentoGridFirstRow: React.FC<BentoGridFirstRowProps> = ({
 
             <div className="mt-6 pt-4 border-t border-[#F12D91]/20 z-10 relative">
               <button
+                type="button"
                 onClick={onOpenAboutModal}
-                className="w-full py-2.5 rounded-xl bg-[#221332] hover:bg-[#2F1A44] border border-[#F12D91]/40 text-[#FF85C0] hover:text-white text-xs font-semibold transition-all flex items-center justify-center gap-1.5 shadow-[0_0_15px_rgba(241,45,145,0.2)] focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF85C0]"
+                aria-haspopup="dialog"
+                aria-label="Read full about me profile and engineering philosophy"
+                className="w-full py-2.5 rounded-xl bg-[#221332] hover:bg-[#2F1A44] border border-[#F12D91]/40 text-[#FF85C0] hover:text-white text-xs font-semibold transition-all flex items-center justify-center gap-1.5 shadow-[0_0_15px_rgba(241,45,145,0.2)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF85C0]"
               >
                 <span>{t.bento1.learnMore}</span>
-                <ArrowUpRight size={14} />
+                <ArrowUpRight size={14} aria-hidden="true" />
               </button>
             </div>
           </div>
 
           {/* CARD 4: Collab Quote */}
           <div
+            role="button"
+            tabIndex={0}
             onClick={onScrollToContact}
-            className="glass-panel rounded-3xl p-6 relative flex flex-col justify-between cursor-pointer group hover:-translate-y-1 bg-gradient-to-br from-[#160D20] via-[#200D2B] to-[#12081B]"
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                onScrollToContact();
+              }
+            }}
+            aria-label="Collaborate on a project. Navigate to contact section"
+            className="glass-panel rounded-3xl p-6 relative flex flex-col justify-between cursor-pointer group hover:-translate-y-1 bg-gradient-to-br from-[#160D20] via-[#200D2B] to-[#12081B] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF85C0]"
           >
             <div>
               <div className="flex items-center gap-2 text-yellow-300 mb-3">
                 <div className="p-2 rounded-xl bg-yellow-500/10 border border-yellow-500/30">
-                  <Sparkles size={20} />
+                  <Sparkles size={20} aria-hidden="true" />
                 </div>
                 <span className="text-xs font-mono uppercase tracking-wider text-yellow-300">
                   {lang === 'fa' ? 'فرصت‌های همکاری' : 'Collaboration'}
@@ -231,7 +261,7 @@ export const BentoGridFirstRow: React.FC<BentoGridFirstRowProps> = ({
               </p>
               <div className="mt-3 flex items-center gap-1 text-xs font-bold text-[#FF85C0] group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform">
                 <span>{lang === 'fa' ? 'ارسال پیام و شروع گفتگو' : 'Get in touch'}</span>
-                <span>→</span>
+                <span aria-hidden="true">→</span>
               </div>
             </div>
           </div>

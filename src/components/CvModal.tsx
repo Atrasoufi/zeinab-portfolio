@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { PERSONAL_INFO, EDUCATION_DATA } from '../data/portfolioData';
 import { TRANSLATIONS, Language } from '../data/translations';
+import { useFocusTrap } from '../hooks/useFocusTrap';
 import { X, Printer, Mail, Github, MapPin, CheckCircle, GraduationCap, Briefcase } from 'lucide-react';
 
 interface CvModalProps {
@@ -11,14 +12,7 @@ interface CvModalProps {
 
 export const CvModal: React.FC<CvModalProps> = ({ isOpen, lang, onClose }) => {
   const t = TRANSLATIONS[lang];
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
-    };
-    if (isOpen) window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, onClose]);
+  const containerRef = useFocusTrap(isOpen, onClose);
 
   if (!isOpen) return null;
 
@@ -35,30 +29,34 @@ export const CvModal: React.FC<CvModalProps> = ({ isOpen, lang, onClose }) => {
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-3xl max-h-[92vh] overflow-y-auto glass-panel rounded-3xl p-6 sm:p-9 bg-[#12081B] border border-[#F12D91]/40 shadow-[0_0_50px_rgba(241,45,145,0.3)]"
+        ref={containerRef}
+        tabIndex={-1}
+        className="relative w-full max-w-3xl max-h-[92vh] overflow-y-auto glass-panel rounded-3xl p-6 sm:p-9 bg-[#12081B] border border-[#F12D91]/40 shadow-[0_0_50px_rgba(241,45,145,0.3)] focus:outline-none"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}
         <button
+          type="button"
           onClick={onClose}
           className="print:hidden absolute top-5 right-5 rtl:right-auto rtl:left-5 p-2 rounded-xl bg-[#221332] border border-[#F12D91]/30 text-white hover:text-[#FF85C0] hover:scale-110 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF85C0]"
           aria-label={t.modals.close}
         >
-          <X size={20} />
+          <X size={20} aria-hidden="true" />
         </button>
 
         {/* Action Header */}
         <div className="print:hidden flex items-center justify-between pb-6 mb-6 border-b border-[#F12D91]/25">
           <div className="flex items-center gap-2 text-xs font-mono text-[#FF85C0]">
-            <span className="w-2 h-2 rounded-full bg-green-400" />
+            <span className="w-2 h-2 rounded-full bg-green-400" aria-hidden="true" />
             <span>{t.modals.cvTitle}</span>
           </div>
 
           <button
+            type="button"
             onClick={handlePrint}
             className="neon-glow-btn px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF85C0]"
           >
-            <Printer size={15} />
+            <Printer size={15} aria-hidden="true" />
             <span>{t.modals.printCv}</span>
           </button>
         </div>
@@ -178,8 +176,9 @@ export const CvModal: React.FC<CvModalProps> = ({ isOpen, lang, onClose }) => {
         {/* Print Only Stylesheet note */}
         <div className="print:hidden mt-8 pt-4 border-t border-[#F12D91]/20 flex justify-end">
           <button
+            type="button"
             onClick={onClose}
-            className="px-4 py-2 rounded-xl bg-[#221332] text-xs font-medium text-white hover:bg-[#2F1A44]"
+            className="px-4 py-2 rounded-xl bg-[#221332] text-xs font-medium text-white hover:bg-[#2F1A44] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF85C0]"
           >
             {t.modals.close}
           </button>

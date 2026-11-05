@@ -61,47 +61,53 @@ export const Header: React.FC<HeaderProps> = ({
         </a>
 
         {/* Desktop Navigation Pill matching reference */}
-        <nav className="hidden lg:flex items-center gap-1 px-3 py-1.5 rounded-full bg-[#160D20]/90 border border-[#F12D91]/30 backdrop-blur-md shadow-[0_0_20px_rgba(241,45,145,0.12)]">
+        <nav aria-label="Main Navigation" className="hidden lg:flex items-center gap-1 px-3 py-1.5 rounded-full bg-[#160D20]/90 border border-[#F12D91]/30 backdrop-blur-md shadow-[0_0_20px_rgba(241,45,145,0.12)]">
           <button
+            type="button"
             onClick={() => handleNavClick('hero')}
-            className="flex items-center gap-2 px-4 py-1.5 text-xs font-semibold text-white bg-[#F12D91]/25 border border-[#F12D91]/50 rounded-full transition-all shadow-[0_0_12px_rgba(241,45,145,0.3)]"
+            className="flex items-center gap-2 px-4 py-1.5 text-xs font-semibold text-white bg-[#F12D91]/25 border border-[#F12D91]/50 rounded-full transition-all shadow-[0_0_12px_rgba(241,45,145,0.3)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF85C0]"
           >
-            <span>⌂</span>
+            <span aria-hidden="true">⌂</span>
             <span>{t.nav.home}</span>
           </button>
           <button
+            type="button"
             onClick={() => handleNavClick('projects')}
-            className="flex items-center gap-2 px-3.5 py-1.5 text-xs font-medium text-[#F8ECFA] hover:text-[#FF85C0] hover:bg-[#F12D91]/10 rounded-full transition-all"
+            className="flex items-center gap-2 px-3.5 py-1.5 text-xs font-medium text-[#F8ECFA] hover:text-[#FF85C0] hover:bg-[#F12D91]/10 rounded-full transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF85C0]"
           >
-            <span>📁</span>
+            <span aria-hidden="true">📁</span>
             <span>{t.nav.projects}</span>
           </button>
           <button
+            type="button"
             onClick={() => handleNavClick('skills')}
-            className="flex items-center gap-2 px-3.5 py-1.5 text-xs font-medium text-[#F8ECFA] hover:text-[#FF85C0] hover:bg-[#F12D91]/10 rounded-full transition-all"
+            className="flex items-center gap-2 px-3.5 py-1.5 text-xs font-medium text-[#F8ECFA] hover:text-[#FF85C0] hover:bg-[#F12D91]/10 rounded-full transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF85C0]"
           >
-            <span>&lt;/&gt;</span>
+            <span aria-hidden="true">&lt;/&gt;</span>
             <span>{t.nav.skills}</span>
           </button>
           <button
+            type="button"
             onClick={() => handleNavClick('about')}
-            className="flex items-center gap-2 px-3.5 py-1.5 text-xs font-medium text-[#F8ECFA] hover:text-[#FF85C0] hover:bg-[#F12D91]/10 rounded-full transition-all"
+            className="flex items-center gap-2 px-3.5 py-1.5 text-xs font-medium text-[#F8ECFA] hover:text-[#FF85C0] hover:bg-[#F12D91]/10 rounded-full transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF85C0]"
           >
-            <span>👤</span>
+            <span aria-hidden="true">👤</span>
             <span>{t.nav.about}</span>
           </button>
           <button
+            type="button"
             onClick={onOpenBlogModal}
-            className="flex items-center gap-2 px-3.5 py-1.5 text-xs font-medium text-[#F8ECFA] hover:text-[#FF85C0] hover:bg-[#F12D91]/10 rounded-full transition-all"
+            className="flex items-center gap-2 px-3.5 py-1.5 text-xs font-medium text-[#F8ECFA] hover:text-[#FF85C0] hover:bg-[#F12D91]/10 rounded-full transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF85C0]"
           >
-            <span>📖</span>
+            <span aria-hidden="true">📖</span>
             <span>{t.nav.blog}</span>
           </button>
           <button
+            type="button"
             onClick={() => handleNavClick('contact')}
-            className="flex items-center gap-2 px-3.5 py-1.5 text-xs font-medium text-[#F8ECFA] hover:text-[#FF85C0] hover:bg-[#F12D91]/10 rounded-full transition-all"
+            className="flex items-center gap-2 px-3.5 py-1.5 text-xs font-medium text-[#F8ECFA] hover:text-[#FF85C0] hover:bg-[#F12D91]/10 rounded-full transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF85C0]"
           >
-            <span>✉</span>
+            <span aria-hidden="true">✉</span>
             <span>{t.nav.contact}</span>
           </button>
         </nav>
@@ -110,19 +116,23 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="hidden sm:flex items-center gap-3">
           {/* Django Architecture Inspector Button */}
           <button
+            type="button"
             onClick={onOpenDjangoModal}
-            className="px-3 py-1.5 rounded-lg bg-[#160D20] border border-[#B84DFF]/40 text-[#D58BFF] hover:border-[#B84DFF] hover:text-white text-xs font-mono transition-all flex items-center gap-1.5 focus:outline-none focus-visible:ring-1 focus-visible:ring-[#B84DFF]"
+            className="px-3 py-1.5 rounded-lg bg-[#160D20] border border-[#B84DFF]/40 text-[#D58BFF] hover:border-[#B84DFF] hover:text-white text-xs font-mono transition-all flex items-center gap-1.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B84DFF]"
             title="Inspect Django Backend Project Architecture"
+            aria-label="Inspect Django backend project architecture"
+            aria-haspopup="dialog"
           >
-            <BookOpen size={14} />
+            <BookOpen size={14} aria-hidden="true" />
             <span>{t.nav.architecture}</span>
           </button>
 
           {/* Bilingual Switcher */}
           <button
+            type="button"
             onClick={onToggleLang}
-            className="px-3 py-1.5 rounded-lg bg-[#160D20] border border-[#F12D91]/30 hover:border-[#F12D91] text-xs font-semibold text-white transition-all shadow-[0_0_10px_rgba(241,45,145,0.15)] flex items-center gap-1 focus:outline-none focus-visible:ring-1 focus-visible:ring-[#F12D91]"
-            aria-label="Toggle language between English and Persian"
+            className="px-3 py-1.5 rounded-lg bg-[#160D20] border border-[#F12D91]/30 hover:border-[#F12D91] text-xs font-semibold text-white transition-all shadow-[0_0_10px_rgba(241,45,145,0.15)] flex items-center gap-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F12D91]"
+            aria-label={`Switch language. Current language is ${lang === 'fa' ? 'Persian' : 'English'}`}
           >
             <span className={lang === 'fa' ? 'text-[#FF85C0] font-bold' : 'text-gray-400'}>FA</span>
             <span className="text-gray-500">/</span>
@@ -131,19 +141,23 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* Theme Switcher */}
           <button
+            type="button"
             onClick={onToggleTheme}
-            className="p-2 rounded-lg bg-[#160D20] border border-[#F12D91]/30 hover:border-[#F12D91] text-[#FF85C0] hover:text-white transition-all shadow-[0_0_10px_rgba(241,45,145,0.15)] focus:outline-none focus-visible:ring-1 focus-visible:ring-[#F12D91]"
-            aria-label={t.nav.themeToggle}
+            className="p-2 rounded-lg bg-[#160D20] border border-[#F12D91]/30 hover:border-[#F12D91] text-[#FF85C0] hover:text-white transition-all shadow-[0_0_10px_rgba(241,45,145,0.15)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F12D91]"
+            aria-label={`${t.nav.themeToggle}. Current mode is ${theme}`}
           >
-            {theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}
+            {theme === 'dark' ? <Sun size={17} aria-hidden="true" /> : <Moon size={17} aria-hidden="true" />}
           </button>
 
           {/* Download CV CTA */}
           <button
+            type="button"
             onClick={onOpenCvModal}
             className="neon-glow-btn px-4 py-2 rounded-full text-xs font-semibold flex items-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF85C0]"
+            aria-haspopup="dialog"
+            aria-label={t.nav.downloadCv}
           >
-            <Download size={15} />
+            <Download size={15} aria-hidden="true" />
             <span>{t.nav.downloadCv}</span>
           </button>
         </div>
@@ -151,24 +165,29 @@ export const Header: React.FC<HeaderProps> = ({
         {/* Mobile Hamburger Button */}
         <div className="flex sm:hidden items-center gap-2">
           <button
+            type="button"
             onClick={onToggleLang}
             className="px-2.5 py-1 rounded-md bg-[#160D20] border border-[#F12D91]/30 text-xs font-bold text-[#FF85C0]"
+            aria-label={`Switch language. Current language is ${lang === 'fa' ? 'Persian' : 'English'}`}
           >
             {lang.toUpperCase()}
           </button>
           <button
+            type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-lg bg-[#160D20] border border-[#F12D91]/30 text-white"
+            className="p-2 rounded-lg bg-[#160D20] border border-[#F12D91]/30 text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF85C0]"
             aria-label="Toggle Navigation Menu"
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-nav-drawer"
           >
-            {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+            {mobileMenuOpen ? <X size={22} aria-hidden="true" /> : <Menu size={22} aria-hidden="true" />}
           </button>
         </div>
       </div>
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="sm:hidden px-4 pt-3 pb-6 bg-[#0E0816] border-b border-[#F12D91]/30 space-y-3">
+        <div id="mobile-nav-drawer" role="region" aria-label="Mobile Navigation Menu" className="sm:hidden px-4 pt-3 pb-6 bg-[#0E0816] border-b border-[#F12D91]/30 space-y-3">
           <div className="flex flex-col space-y-2">
             <button
               onClick={() => handleNavClick('hero')}

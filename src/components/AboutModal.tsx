@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { NeonButterfly } from './NeonButterfly';
 import { PERSONAL_INFO } from '../data/portfolioData';
 import { TRANSLATIONS, Language } from '../data/translations';
+import { useFocusTrap } from '../hooks/useFocusTrap';
 import { X, User, Heart, Terminal, Shield, Cpu, ArrowRight } from 'lucide-react';
 
 interface AboutModalProps {
@@ -18,14 +19,7 @@ export const AboutModal: React.FC<AboutModalProps> = ({
   onScrollToContact,
 }) => {
   const t = TRANSLATIONS[lang];
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
-    };
-    if (isOpen) window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, onClose]);
+  const containerRef = useFocusTrap(isOpen, onClose);
 
   if (!isOpen) return null;
 
@@ -38,21 +32,24 @@ export const AboutModal: React.FC<AboutModalProps> = ({
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto glass-panel rounded-3xl p-6 sm:p-8 bg-[#12081B] border border-[#F12D91]/40 shadow-[0_0_50px_rgba(241,45,145,0.3)]"
+        ref={containerRef}
+        tabIndex={-1}
+        className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto glass-panel rounded-3xl p-6 sm:p-8 bg-[#12081B] border border-[#F12D91]/40 shadow-[0_0_50px_rgba(241,45,145,0.3)] focus:outline-none"
         onClick={(e) => e.stopPropagation()}
       >
         <button
+          type="button"
           onClick={onClose}
           className="absolute top-5 right-5 rtl:right-auto rtl:left-5 p-2 rounded-xl bg-[#221332] border border-[#F12D91]/30 text-white hover:text-[#FF85C0] hover:scale-110 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF85C0]"
           aria-label={t.modals.close}
         >
-          <X size={20} />
+          <X size={20} aria-hidden="true" />
         </button>
 
         {/* Header */}
         <div className="flex items-center gap-3 mb-6">
           <div className="p-3 rounded-2xl bg-[#221332] border border-[#F12D91]/40 text-[#FF85C0]">
-            <User size={24} />
+            <User size={24} aria-hidden="true" />
           </div>
           <div>
             <h2 id="about-modal-title" className="text-2xl font-bold font-['Outfit'] text-white">
@@ -82,31 +79,31 @@ export const AboutModal: React.FC<AboutModalProps> = ({
         {/* Engineering Pillars */}
         <div className="my-6 grid grid-cols-1 sm:grid-cols-3 gap-3">
           <div className="p-3.5 rounded-2xl bg-[#160D20] border border-[#F12D91]/25 space-y-1">
-            <Terminal size={18} className="text-[#FF85C0]" />
+            <Terminal size={18} aria-hidden="true" className="text-[#FF85C0]" />
             <h4 className="text-xs font-bold text-white">
               {lang === 'fa' ? 'کد تمیز و ساختاریافته' : 'Clean & Idiomatic'}
             </h4>
-            <p className="text-[11px] text-[#8E79A5]">
+            <p className="text-[11px] text-[#BDA9C9]">
               {lang === 'fa' ? 'رعایت PEP 8 و معماری ماژولار' : 'Strict PEP 8 & modular Django apps'}
             </p>
           </div>
 
           <div className="p-3.5 rounded-2xl bg-[#160D20] border border-[#B84DFF]/25 space-y-1">
-            <Cpu size={18} className="text-[#D58BFF]" />
+            <Cpu size={18} aria-hidden="true" className="text-[#D58BFF]" />
             <h4 className="text-xs font-bold text-white">
               {lang === 'fa' ? 'بهینه‌سازی کوئری‌ها' : 'Query Optimization'}
             </h4>
-            <p className="text-[11px] text-[#8E79A5]">
+            <p className="text-[11px] text-[#BDA9C9]">
               {lang === 'fa' ? 'حذف N+1 و ایندکس‌گذاری دقیق' : 'Zero N+1 & tuned SQL indexing'}
             </p>
           </div>
 
           <div className="p-3.5 rounded-2xl bg-[#160D20] border border-[#F12D91]/25 space-y-1">
-            <Shield size={18} className="text-[#FF85C0]" />
+            <Shield size={18} aria-hidden="true" className="text-[#FF85C0]" />
             <h4 className="text-xs font-bold text-white">
               {lang === 'fa' ? 'امنیت و پایداری' : 'Security by Design'}
             </h4>
-            <p className="text-[11px] text-[#8E79A5]">
+            <p className="text-[11px] text-[#BDA9C9]">
               {lang === 'fa' ? 'احراز هویت امن JWT و مجوزها' : 'JWT auth, sanitization & CORS'}
             </p>
           </div>
@@ -115,19 +112,21 @@ export const AboutModal: React.FC<AboutModalProps> = ({
         {/* Actions */}
         <div className="pt-4 border-t border-[#F12D91]/20 flex items-center justify-between">
           <button
+            type="button"
             onClick={() => {
               onClose();
               onScrollToContact();
             }}
-            className="neon-glow-btn px-5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 cursor-pointer"
+            className="neon-glow-btn px-5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF85C0]"
           >
             <span>{lang === 'fa' ? 'ارسال پیام به من' : 'Send a Message'}</span>
-            <ArrowRight size={14} className="rtl:rotate-180" />
+            <ArrowRight size={14} aria-hidden="true" className="rtl:rotate-180" />
           </button>
 
           <button
+            type="button"
             onClick={onClose}
-            className="px-4 py-2 rounded-xl bg-[#221332] text-xs font-medium text-white hover:bg-[#2F1A44]"
+            className="px-4 py-2 rounded-xl bg-[#221332] text-xs font-medium text-white hover:bg-[#2F1A44] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF85C0]"
           >
             {t.modals.close}
           </button>

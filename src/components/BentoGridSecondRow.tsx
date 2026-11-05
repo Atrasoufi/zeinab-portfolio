@@ -67,11 +67,14 @@ export const BentoGridSecondRow: React.FC<BentoGridSecondRowProps> = ({
                   </h3>
                 </div>
                 <button
+                  type="button"
                   onClick={() => onSelectProject(FEATURED_PROJECTS[0])}
-                  className="text-xs font-mono text-[#D58BFF] hover:text-[#FF85C0] flex items-center gap-1 transition-colors"
+                  aria-label="View all featured projects and details"
+                  aria-haspopup="dialog"
+                  className="text-xs font-mono text-[#D58BFF] hover:text-[#FF85C0] flex items-center gap-1 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF85C0] rounded-md px-1"
                 >
                   <span>{lang === 'fa' ? 'مشاهده پروژه‌ها' : 'View All Projects'}</span>
-                  <span>→</span>
+                  <span aria-hidden="true">→</span>
                 </button>
               </div>
 
@@ -79,18 +82,29 @@ export const BentoGridSecondRow: React.FC<BentoGridSecondRowProps> = ({
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 {FEATURED_PROJECTS.map((project) => {
                   const thumb = projectThumbnails[project.id as keyof typeof projectThumbnails];
+                  const projectTitle = lang === 'fa' ? project.titleFa : project.title;
                   return (
                     <div
                       key={project.id}
+                      role="button"
+                      tabIndex={0}
                       onClick={() => onSelectProject(project)}
-                      className="p-3.5 rounded-2xl bg-[#140C1D] border border-[#F12D91]/25 hover:border-[#FF85C0] hover:bg-[#1C1028] transition-all cursor-pointer group flex flex-col justify-between shadow-[0_0_15px_rgba(241,45,145,0.06)]"
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault();
+                          onSelectProject(project);
+                        }
+                      }}
+                      aria-haspopup="dialog"
+                      aria-label={`View architecture details and REST endpoints for ${projectTitle}`}
+                      className="p-3.5 rounded-2xl bg-[#140C1D] border border-[#F12D91]/25 hover:border-[#FF85C0] hover:bg-[#1C1028] transition-all cursor-pointer group flex flex-col justify-between shadow-[0_0_15px_rgba(241,45,145,0.06)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF85C0]"
                     >
                       <div>
                         {/* Thumbnail Icon */}
-                        <div className="w-full h-16 rounded-xl bg-gradient-to-b from-[#1C0F2B]/60 to-[#0B0612]/80 border border-[#F12D91]/25 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+                        <div className="w-full h-16 rounded-xl bg-gradient-to-b from-[#1C0F2B]/60 to-[#0B0612]/80 border border-[#F12D91]/25 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform" aria-hidden="true">
                           <img
                             src={thumb}
-                            alt={project.title}
+                            alt=""
                             className="max-h-12 max-w-[70px] object-contain drop-shadow-[0_0_15px_#F12D91]"
                             style={{ mixBlendMode: 'screen' }}
                           />
@@ -98,7 +112,7 @@ export const BentoGridSecondRow: React.FC<BentoGridSecondRowProps> = ({
 
                         {/* Title & Description */}
                         <h4 className="text-xs sm:text-sm font-bold text-white group-hover:text-[#FF85C0] transition-colors font-['Outfit'] truncate">
-                          {lang === 'fa' ? project.titleFa : project.title}
+                          {projectTitle}
                         </h4>
                         <p className="text-[11px] text-[#BDA9C9] mt-1 line-clamp-2 leading-relaxed">
                           {lang === 'fa' ? project.shortDescFa : project.shortDesc}
@@ -117,7 +131,7 @@ export const BentoGridSecondRow: React.FC<BentoGridSecondRowProps> = ({
                             </span>
                           ))}
                         </div>
-                        <ExternalLink size={13} className="text-[#8E79A5] group-hover:text-[#FF85C0] transition-colors" />
+                        <ExternalLink size={13} aria-hidden="true" className="text-[#BDA9C9] group-hover:text-[#FF85C0] transition-colors" />
                       </div>
                     </div>
                   );
@@ -125,7 +139,7 @@ export const BentoGridSecondRow: React.FC<BentoGridSecondRowProps> = ({
               </div>
             </div>
 
-            <div className="mt-4 pt-3 border-t border-[#F12D91]/15 flex items-center justify-between text-[11px] text-[#8E79A5]">
+            <div className="mt-4 pt-3 border-t border-[#F12D91]/15 flex items-center justify-between text-[11px] text-[#BDA9C9]">
               <span>{lang === 'fa' ? 'برای مشاهده معماری و اندپوینت‌ها کلیک کنید' : 'Click to inspect endpoints & system architecture'}</span>
               <span className="text-[#FF85C0] font-mono">Django &amp; REST</span>
             </div>
@@ -135,23 +149,25 @@ export const BentoGridSecondRow: React.FC<BentoGridSecondRowProps> = ({
           <div className="lg:col-span-3 glass-panel rounded-3xl p-6 flex flex-col justify-between">
             <div>
               <div className="flex items-center gap-2 mb-3">
-                <Zap size={18} className="text-[#FF85C0]" />
+                <Zap size={18} className="text-[#FF85C0]" aria-hidden="true" />
                 <h3 className="text-lg font-bold font-['Outfit'] text-white">
                   {t.bento2.techStack}
                 </h3>
               </div>
 
               {/* 8 Icons in a 2x4 grid */}
-              <div className="grid grid-cols-4 gap-2 pt-2">
+              <div className="grid grid-cols-4 gap-2 pt-2" role="list" aria-label="Core Technical Stack">
                 {TECH_STACK_ITEMS.map((item) => (
                   <div
                     key={item.name}
+                    role="listitem"
                     className="p-2.5 rounded-xl bg-[#140C1D] border border-[#F12D91]/25 hover:border-[#FF85C0] hover:bg-[#1E122C] transition-all flex flex-col items-center justify-center text-center group cursor-default shadow-[0_0_10px_rgba(241,45,145,0.05)]"
                     title={item.name}
                   >
                     <div
                       className="w-8 h-8 rounded-lg flex items-center justify-center font-mono font-bold text-xs transition-transform group-hover:scale-110"
                       style={{ backgroundColor: `${item.color}25`, color: item.color, border: `1px solid ${item.color}50` }}
+                      aria-hidden="true"
                     >
                       {item.icon === 'django' ? 'dj' : item.name.slice(0, 2).toUpperCase()}
                     </div>
@@ -174,7 +190,7 @@ export const BentoGridSecondRow: React.FC<BentoGridSecondRowProps> = ({
               {/* Header */}
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-1.5">
-                  <Calendar size={16} className="text-[#FF85C0]" />
+                  <Calendar size={16} className="text-[#FF85C0]" aria-hidden="true" />
                   <h3 className="text-sm font-bold font-['Outfit'] text-white">
                     {lang === 'fa' ? 'مشارکت‌های گیت‌هاب' : 'GitHub Contributions'}
                   </h3>
@@ -186,10 +202,15 @@ export const BentoGridSecondRow: React.FC<BentoGridSecondRowProps> = ({
               </div>
 
               {/* Heatmap Grid */}
-              <div className="p-3 rounded-2xl bg-[#0E0716] border border-[#F12D91]/20 overflow-x-auto">
-                <div className="flex gap-2 min-w-[210px]">
+              <div
+                role="region"
+                aria-label="GitHub annual contribution activity matrix"
+                className="p-3 rounded-2xl bg-[#0E0716] border border-[#F12D91]/20 overflow-x-auto"
+              >
+                <span className="sr-only">Annual GitHub contribution activity matrix showing consistent weekly commit frequency.</span>
+                <div className="flex gap-2 min-w-[210px]" aria-hidden="true">
                   {/* Weekday labels */}
-                  <div className="flex flex-col justify-between py-0.5 text-[9px] font-mono text-[#8E79A5]">
+                  <div className="flex flex-col justify-between py-0.5 text-[9px] font-mono text-[#BDA9C9]">
                     <span>{t.bento2.mon}</span>
                     <span>{t.bento2.wed}</span>
                     <span>{t.bento2.fri}</span>
@@ -201,7 +222,7 @@ export const BentoGridSecondRow: React.FC<BentoGridSecondRowProps> = ({
                       row.map((level, cIdx) => (
                         <div
                           key={`${rIdx}-${cIdx}`}
-                          className={`w-2.5 h-2.5 rounded-xs border transition-all cursor-pointer hover:scale-125 ${getCellColor(
+                          className={`w-2.5 h-2.5 rounded-xs border transition-all ${getCellColor(
                             level
                           )}`}
                           title={`Level ${level}`}

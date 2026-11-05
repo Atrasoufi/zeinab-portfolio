@@ -154,7 +154,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
 
               <form onSubmit={handleSendEmail} className="space-y-4">
                 {error && (
-                  <div className="p-2.5 rounded-lg bg-red-950/80 border border-red-500/50 text-xs text-red-200">
+                  <div role="alert" aria-live="assertive" className="p-2.5 rounded-lg bg-red-950/80 border border-red-500/50 text-xs text-red-200">
                     {t.contact.validationError}
                   </div>
                 )}
@@ -214,18 +214,21 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
                 <div className="pt-2 flex flex-wrap items-center gap-3">
                   <button
                     type="submit"
-                    className="neon-glow-btn px-6 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 cursor-pointer"
+                    aria-label={t.contact.sendButton}
+                    className="neon-glow-btn px-6 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF85C0]"
                   >
-                    <Send size={14} />
+                    <Send size={14} aria-hidden="true" />
                     <span>{t.contact.sendButton}</span>
                   </button>
 
                   <button
                     type="button"
                     onClick={() => setShowPayload(!showPayload)}
-                    className="px-4 py-2.5 rounded-xl bg-[#160D20] border border-[#B84DFF]/40 text-[#D58BFF] hover:border-[#FF85C0] hover:text-white text-xs font-mono transition-all flex items-center gap-1.5 cursor-pointer"
+                    aria-expanded={showPayload}
+                    aria-controls="contact-payload-inspector"
+                    className="px-4 py-2.5 rounded-xl bg-[#160D20] border border-[#B84DFF]/40 text-[#D58BFF] hover:border-[#FF85C0] hover:text-white text-xs font-mono transition-all flex items-center gap-1.5 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B84DFF]"
                   >
-                    <Code size={14} />
+                    <Code size={14} aria-hidden="true" />
                     <span>{t.contact.inspectPayload}</span>
                   </button>
                 </div>
@@ -233,16 +236,18 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
 
               {/* API Payload Inspector */}
               {showPayload && (
-                <div dir="ltr" className="mt-5 p-4 rounded-xl bg-[#0B0612] border border-[#B84DFF]/40 animate-in fade-in">
+                <div id="contact-payload-inspector" role="region" aria-label="Django REST API payload structure" dir="ltr" className="mt-5 p-4 rounded-xl bg-[#0B0612] border border-[#B84DFF]/40 animate-in fade-in">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-xs font-mono text-green-400 font-bold">
                       {t.contact.payloadTitle}
                     </span>
                     <button
+                      type="button"
                       onClick={handleCopyPayload}
-                      className="px-2 py-1 rounded bg-[#160D20] text-xs font-mono text-[#FF85C0] hover:text-white flex items-center gap-1"
+                      aria-label={copiedPayload ? "API Payload copied" : "Copy API payload JSON to clipboard"}
+                      className="px-2 py-1 rounded bg-[#160D20] text-xs font-mono text-[#FF85C0] hover:text-white flex items-center gap-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF85C0]"
                     >
-                      {copiedPayload ? <Check size={12} className="text-green-400" /> : <Copy size={12} />}
+                      {copiedPayload ? <Check size={12} className="text-green-400" aria-hidden="true" /> : <Copy size={12} aria-hidden="true" />}
                       <span>{copiedPayload ? 'Copied' : t.contact.copyPayload}</span>
                     </button>
                   </div>

@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { SKILL_CATEGORIES } from '../data/portfolioData';
 import { Language } from '../data/translations';
+import { useFocusTrap } from '../hooks/useFocusTrap';
 import { X, Code2, CheckCircle2 } from 'lucide-react';
 
 interface SkillDetailModalProps {
@@ -14,13 +15,7 @@ export const SkillDetailModal: React.FC<SkillDetailModalProps> = ({
   lang,
   onClose,
 }) => {
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
-    };
-    if (skillName) window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [skillName, onClose]);
+  const containerRef = useFocusTrap(Boolean(skillName), onClose);
 
   if (!skillName) return null;
 
@@ -50,20 +45,23 @@ export const SkillDetailModal: React.FC<SkillDetailModalProps> = ({
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-lg glass-panel rounded-3xl p-6 sm:p-8 bg-[#12081B] border border-[#F12D91]/40 shadow-[0_0_50px_rgba(241,45,145,0.3)]"
+        ref={containerRef}
+        tabIndex={-1}
+        className="relative w-full max-w-lg glass-panel rounded-3xl p-6 sm:p-8 bg-[#12081B] border border-[#F12D91]/40 shadow-[0_0_50px_rgba(241,45,145,0.3)] focus:outline-none"
         onClick={(e) => e.stopPropagation()}
       >
         <button
+          type="button"
           onClick={onClose}
           className="absolute top-5 right-5 rtl:right-auto rtl:left-5 p-2 rounded-xl bg-[#221332] border border-[#F12D91]/30 text-white hover:text-[#FF85C0] hover:scale-110 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF85C0]"
-          aria-label="Close"
+          aria-label={lang === 'fa' ? 'بستن جزئیات مهارت' : 'Close skill details dialog'}
         >
-          <X size={20} />
+          <X size={20} aria-hidden="true" />
         </button>
 
         <div className="flex items-center gap-3 mb-5">
           <div className="p-3 rounded-2xl bg-[#221332] border border-[#F12D91]/40 text-[#FF85C0]">
-            <Code2 size={24} />
+            <Code2 size={24} aria-hidden="true" />
           </div>
           <div>
             <span className="text-[11px] font-mono text-[#D58BFF] uppercase tracking-wider block">
@@ -99,11 +97,11 @@ export const SkillDetailModal: React.FC<SkillDetailModalProps> = ({
 
           <div className="pt-2 border-t border-[#F12D91]/15 space-y-2">
             <div className="flex items-center gap-2 text-xs text-[#D58BFF]">
-              <CheckCircle2 size={14} className="text-green-400 shrink-0" />
+              <CheckCircle2 size={14} aria-hidden="true" className="text-green-400 shrink-0" />
               <span>{lang === 'fa' ? 'تسلط بر پیاده‌سازی و یکپارچه‌سازی در پروژه‌های پروداکشن' : 'Production-ready integration & best practices'}</span>
             </div>
             <div className="flex items-center gap-2 text-xs text-[#D58BFF]">
-              <CheckCircle2 size={14} className="text-green-400 shrink-0" />
+              <CheckCircle2 size={14} aria-hidden="true" className="text-green-400 shrink-0" />
               <span>{lang === 'fa' ? 'رعایت استانداردها و اصول امنیتی' : 'Security, maintainability & testing'}</span>
             </div>
           </div>
@@ -111,8 +109,9 @@ export const SkillDetailModal: React.FC<SkillDetailModalProps> = ({
 
         <div className="mt-6 pt-4 border-t border-[#F12D91]/20 flex justify-end">
           <button
+            type="button"
             onClick={onClose}
-            className="px-4 py-2 rounded-xl bg-[#221332] text-xs font-medium text-white hover:bg-[#2F1A44]"
+            className="px-4 py-2 rounded-xl bg-[#221332] text-xs font-medium text-white hover:bg-[#2F1A44] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF85C0]"
           >
             {lang === 'fa' ? 'بستن' : 'Close'}
           </button>

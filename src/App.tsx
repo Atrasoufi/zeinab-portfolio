@@ -95,6 +95,14 @@ export default function App() {
 
   return (
     <div className="relative min-h-screen bg-[var(--bg-main)] text-[var(--color-text-main)] overflow-x-hidden transition-colors duration-300">
+      {/* Skip to Main Content Link for Keyboard / Screen Reader Users (WCAG 2.4.1) */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 z-50 px-4 py-2.5 rounded-xl bg-[#F12D91] text-white font-bold text-xs shadow-[0_0_20px_#F12D91] focus:outline-none focus:ring-2 focus:ring-white"
+      >
+        {lang === 'fa' ? 'پرش به محتوای اصلی' : 'Skip to main content'}
+      </a>
+
       {/* Background 2D Star & Sparkle Particle Canvas */}
       <SparkleCanvas />
 
@@ -110,7 +118,7 @@ export default function App() {
       />
 
       {/* Main Content Sections */}
-      <main className="relative z-10 space-y-6">
+      <main id="main-content" tabIndex={-1} className="relative z-10 space-y-6 focus:outline-none">
         <HeroSection
           lang={lang}
           onExploreProjects={handleScrollToProjects}

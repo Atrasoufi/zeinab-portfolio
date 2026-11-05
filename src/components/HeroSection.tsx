@@ -85,19 +85,24 @@ class Developer(APIView):
             {/* CTAs */}
             <div className="flex flex-wrap items-center justify-center lg:justify-start rtl:lg:justify-start gap-4 pt-1">
               <button
+                type="button"
                 onClick={onOpenGithubModal}
+                aria-haspopup="dialog"
+                aria-label={t.hero.viewGithub}
                 className="neon-glow-btn px-6 py-3 rounded-full text-sm font-bold flex items-center gap-2 group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF85C0]"
               >
                 <span>{t.hero.viewGithub}</span>
-                <ArrowRight size={16} className="text-white group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
+                <ArrowRight size={16} aria-hidden="true" className="text-white group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
               </button>
 
               <button
+                type="button"
                 onClick={onExploreProjects}
+                aria-label={t.hero.exploreProjects}
                 className="px-5 py-3 rounded-full bg-[#160D20] border border-[#F12D91]/40 hover:border-[#F12D91] text-[#F8ECFA] hover:text-white text-sm font-semibold transition-all shadow-[0_0_15px_rgba(241,45,145,0.15)] flex items-center gap-2 group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F12D91]"
               >
                 <span>{t.hero.exploreProjects}</span>
-                <Sparkles size={16} className="text-yellow-300 group-hover:rotate-12 transition-transform" />
+                <Sparkles size={16} aria-hidden="true" className="text-yellow-300 group-hover:rotate-12 transition-transform" />
               </button>
             </div>
 
@@ -120,7 +125,7 @@ class Developer(APIView):
           </div>
 
           {/* Flying Neon Butterfly between Hero Left and Terminal (in the ambient space, not overlapping code) */}
-          <div className="hidden lg:block absolute left-[38%] top-16 z-0 pointer-events-none animate-float select-none">
+          <div className="hidden lg:block absolute left-[38%] top-16 z-0 pointer-events-none animate-float select-none" aria-hidden="true">
             <img
               src="/public/assets/portfolio/hero_butterfly_trans.png"
               alt=""
@@ -136,28 +141,30 @@ class Developer(APIView):
               {/* Window Title Bar */}
               <div className="px-4 py-2.5 bg-[#160D20] border-b border-[#B84DFF]/25 flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <span className="w-3 h-3 rounded-full bg-[#FF5F56] border border-[#E0443E]/50" />
-                  <span className="w-3 h-3 rounded-full bg-[#FFBD2E] border border-[#DEA123]/50" />
-                  <span className="w-3 h-3 rounded-full bg-[#27C93F] border border-[#1AAB29]/50" />
+                  <span className="w-3 h-3 rounded-full bg-[#FF5F56] border border-[#E0443E]/50" aria-hidden="true" />
+                  <span className="w-3 h-3 rounded-full bg-[#FFBD2E] border border-[#DEA123]/50" aria-hidden="true" />
+                  <span className="w-3 h-3 rounded-full bg-[#27C93F] border border-[#1AAB29]/50" aria-hidden="true" />
                   <span className="text-xs font-mono text-[#D58BFF] ml-2 flex items-center gap-1.5">
-                    <Terminal size={13} />
+                    <Terminal size={13} aria-hidden="true" />
                     {t.hero.editorFile}
                   </span>
                 </div>
 
                 <button
+                  type="button"
                   onClick={handleCopyCode}
-                  className="flex items-center gap-1.5 px-2 py-1 rounded bg-[#221332] hover:bg-[#2F1A44] border border-[#F12D91]/30 text-xs font-mono text-[#FF85C0] transition-colors focus:outline-none"
+                  className="flex items-center gap-1.5 px-2 py-1 rounded bg-[#221332] hover:bg-[#2F1A44] border border-[#F12D91]/30 text-xs font-mono text-[#FF85C0] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF85C0]"
                   title="Copy code to clipboard"
+                  aria-label={copied ? "Code copied to clipboard" : "Copy Python code snippet to clipboard"}
                 >
                   {copied ? (
                     <>
-                      <Check size={12} className="text-green-400" />
+                      <Check size={12} className="text-green-400" aria-hidden="true" />
                       <span className="text-green-400 text-[11px]">{t.hero.copied}</span>
                     </>
                   ) : (
                     <>
-                      <Copy size={12} />
+                      <Copy size={12} aria-hidden="true" />
                       <span className="text-[11px]">{t.hero.copyCode}</span>
                     </>
                   )}
@@ -168,7 +175,7 @@ class Developer(APIView):
               <div dir="ltr" className="p-4 text-xs font-mono leading-relaxed overflow-x-auto text-left select-text bg-[#0E0816]/95">
                 <div className="flex items-start gap-3">
                   {/* Line numbers */}
-                  <div className="text-[#6B5B7B] select-none text-right font-mono pr-2 border-r border-[#3A1E4D]">
+                  <div className="text-[#6B5B7B] select-none text-right font-mono pr-2 border-r border-[#3A1E4D]" aria-hidden="true">
                     <div>1</div>
                     <div>2</div>
                     <div>3</div>
@@ -212,11 +219,13 @@ class Developer(APIView):
               {/* Action Runner Bar */}
               <div className="px-4 py-2 bg-[#120A1A] border-t border-[#B84DFF]/25 flex items-center justify-between">
                 <button
+                  type="button"
                   onClick={handleTestResponse}
                   disabled={testingResponse}
-                  className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#F12D91]/20 hover:bg-[#F12D91]/35 border border-[#F12D91]/40 text-[#FF85C0] text-xs font-mono transition-all disabled:opacity-50"
+                  aria-label="Execute Django API View simulation"
+                  className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#F12D91]/20 hover:bg-[#F12D91]/35 border border-[#F12D91]/40 text-[#FF85C0] text-xs font-mono transition-all disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF85C0]"
                 >
-                  <Play size={11} className={testingResponse ? 'animate-spin' : ''} />
+                  <Play size={11} className={testingResponse ? 'animate-spin' : ''} aria-hidden="true" />
                   <span>{testingResponse ? t.hero.running : t.hero.runTest}</span>
                 </button>
                 <span className="text-[11px] font-mono text-green-400">● 200 OK</span>
@@ -224,10 +233,17 @@ class Developer(APIView):
 
               {/* Response Drawer */}
               {showResponse && (
-                <div dir="ltr" className="p-3 bg-[#09050E] border-t border-green-500/30 text-[11px] font-mono text-left animate-in fade-in">
+                <div dir="ltr" role="region" aria-label="API Response" className="p-3 bg-[#09050E] border-t border-green-500/30 text-[11px] font-mono text-left animate-in fade-in">
                   <div className="text-green-400 font-semibold mb-1 flex items-center justify-between">
                     <span>{t.hero.responsePreview}</span>
-                    <button onClick={() => setShowResponse(false)} className="text-gray-400 hover:text-white">✕</button>
+                    <button
+                      type="button"
+                      onClick={() => setShowResponse(false)}
+                      className="text-gray-400 hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF85C0] p-1 rounded"
+                      aria-label="Close API response preview"
+                    >
+                      ✕
+                    </button>
                   </div>
                   <pre className="text-[#D58BFF] whitespace-pre-wrap">
 {`{

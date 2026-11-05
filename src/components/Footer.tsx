@@ -46,10 +46,13 @@ export const Footer: React.FC<FooterProps> = ({ lang, onOpenDjangoModal }) => {
             </span>
 
             <button
+              type="button"
               onClick={onOpenDjangoModal}
-              className="px-2.5 py-1 rounded-lg bg-[#160D20] border border-[#B84DFF]/30 text-[#D58BFF] hover:border-[#FF85C0] hover:text-white text-[11px] font-mono transition-all flex items-center gap-1"
+              aria-haspopup="dialog"
+              aria-label="Inspect Django backend architecture"
+              className="px-2.5 py-1 rounded-lg bg-[#160D20] border border-[#B84DFF]/30 text-[#D58BFF] hover:border-[#FF85C0] hover:text-white text-[11px] font-mono transition-all flex items-center gap-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF85C0]"
             >
-              <BookOpen size={12} />
+              <BookOpen size={12} aria-hidden="true" />
               <span>Django</span>
             </button>
           </div>
@@ -60,38 +63,38 @@ export const Footer: React.FC<FooterProps> = ({ lang, onOpenDjangoModal }) => {
               href={PERSONAL_INFO.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 rounded-xl bg-[#160D20] border border-[#F12D91]/30 hover:border-[#FF85C0] text-[#FF85C0] hover:text-white transition-all shadow-[0_0_10px_rgba(241,45,145,0.15)]"
+              className="p-2 rounded-xl bg-[#160D20] border border-[#F12D91]/30 hover:border-[#FF85C0] text-[#FF85C0] hover:text-white transition-all shadow-[0_0_10px_rgba(241,45,145,0.15)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF85C0]"
               aria-label="GitHub Profile"
             >
-              <Github size={15} />
+              <Github size={15} aria-hidden="true" />
             </a>
 
             <a
               href={PERSONAL_INFO.linkedinUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 rounded-xl bg-[#160D20] border border-[#F12D91]/30 hover:border-[#FF85C0] text-[#FF85C0] hover:text-white transition-all shadow-[0_0_10px_rgba(241,45,145,0.15)]"
+              className="p-2 rounded-xl bg-[#160D20] border border-[#F12D91]/30 hover:border-[#FF85C0] text-[#FF85C0] hover:text-white transition-all shadow-[0_0_10px_rgba(241,45,145,0.15)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF85C0]"
               aria-label="LinkedIn Profile"
             >
-              <Linkedin size={15} />
+              <Linkedin size={15} aria-hidden="true" />
             </a>
 
             <a
               href={PERSONAL_INFO.telegramUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 rounded-xl bg-[#160D20] border border-[#F12D91]/30 hover:border-[#FF85C0] text-[#FF85C0] hover:text-white transition-all shadow-[0_0_10px_rgba(241,45,145,0.15)]"
+              className="p-2 rounded-xl bg-[#160D20] border border-[#F12D91]/30 hover:border-[#FF85C0] text-[#FF85C0] hover:text-white transition-all shadow-[0_0_10px_rgba(241,45,145,0.15)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF85C0]"
               aria-label="Telegram"
             >
-              <Send size={15} />
+              <Send size={15} aria-hidden="true" />
             </a>
 
             <a
               href={`mailto:${PERSONAL_INFO.email}`}
-              className="p-2 rounded-xl bg-[#160D20] border border-[#F12D91]/30 hover:border-[#FF85C0] text-[#FF85C0] hover:text-white transition-all shadow-[0_0_10px_rgba(241,45,145,0.15)]"
+              className="p-2 rounded-xl bg-[#160D20] border border-[#F12D91]/30 hover:border-[#FF85C0] text-[#FF85C0] hover:text-white transition-all shadow-[0_0_10px_rgba(241,45,145,0.15)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF85C0]"
               aria-label="Email"
             >
-              <Mail size={15} />
+              <Mail size={15} aria-hidden="true" />
             </a>
           </div>
         </div>

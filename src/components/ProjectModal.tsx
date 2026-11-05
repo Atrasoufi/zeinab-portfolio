@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { ProjectItem } from '../data/portfolioData';
 import { TRANSLATIONS, Language } from '../data/translations';
+import { useFocusTrap } from '../hooks/useFocusTrap';
 import { X, ExternalLink, Github, Code, CheckCircle, AlertTriangle } from 'lucide-react';
 
 interface ProjectModalProps {
@@ -15,14 +16,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
   onClose,
 }) => {
   const t = TRANSLATIONS[lang];
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [onClose]);
+  const containerRef = useFocusTrap(Boolean(project), onClose);
 
   if (!project) return null;
 
@@ -35,16 +29,19 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto glass-panel rounded-3xl p-6 sm:p-8 bg-[#12081B] border border-[#F12D91]/40 shadow-[0_0_50px_rgba(241,45,145,0.3)]"
+        ref={containerRef}
+        tabIndex={-1}
+        className="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto glass-panel rounded-3xl p-6 sm:p-8 bg-[#12081B] border border-[#F12D91]/40 shadow-[0_0_50px_rgba(241,45,145,0.3)] focus:outline-none"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}
         <button
+          type="button"
           onClick={onClose}
           className="absolute top-5 right-5 rtl:right-auto rtl:left-5 p-2 rounded-xl bg-[#221332] border border-[#F12D91]/30 text-white hover:text-[#FF85C0] hover:scale-110 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF85C0]"
           aria-label={t.modals.close}
         >
-          <X size={20} />
+          <X size={20} aria-hidden="true" />
         </button>
 
         {/* Header */}
@@ -75,14 +72,14 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
         <div className="space-y-6 pt-4 border-t border-[#F12D91]/20">
           <div>
             <h3 className="text-base font-bold text-white font-['Outfit'] mb-3 flex items-center gap-2">
-              <Code size={18} className="text-[#FF85C0]" />
+              <Code size={18} aria-hidden="true" className="text-[#FF85C0]" />
               <span>{t.modals.architectureBreakdown}</span>
             </h3>
             <div className="space-y-2">
               {(lang === 'fa' ? project.implementationDetailsFa : project.implementationDetails).map(
                 (detail, idx) => (
                   <div key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-[#BDA9C9]">
-                    <CheckCircle size={16} className="text-green-400 shrink-0 mt-0.5" />
+                    <CheckCircle size={16} aria-hidden="true" className="text-green-400 shrink-0 mt-0.5" />
                     <span>{detail}</span>
                   </div>
                 )
@@ -93,7 +90,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
           {/* Technical Challenges Solved */}
           <div>
             <h3 className="text-base font-bold text-white font-['Outfit'] mb-3 flex items-center gap-2">
-              <AlertTriangle size={18} className="text-yellow-400" />
+              <AlertTriangle size={18} aria-hidden="true" className="text-yellow-400" />
               <span>{t.modals.challenges}</span>
             </h3>
             <div className="space-y-2">
@@ -155,15 +152,16 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
               href={project.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="neon-glow-btn px-5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2"
+              className="neon-glow-btn px-5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF85C0]"
             >
-              <Github size={16} />
+              <Github size={16} aria-hidden="true" />
               <span>{t.modals.viewOnGithub}</span>
             </a>
 
             <button
+              type="button"
               onClick={onClose}
-              className="px-4 py-2 rounded-xl bg-[#221332] text-xs font-medium text-white hover:bg-[#2F1A44]"
+              className="px-4 py-2 rounded-xl bg-[#221332] text-xs font-medium text-white hover:bg-[#2F1A44] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF85C0]"
             >
               {t.modals.close}
             </button>
