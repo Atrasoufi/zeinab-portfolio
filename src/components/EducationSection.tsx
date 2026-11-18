@@ -6,14 +6,10 @@ import { GraduationCap, BookOpen, Award, CheckCircle2 } from 'lucide-react';
 
 interface EducationSectionProps {
   lang: Language;
-  videoUrl?: string | null;
-  onOpenVideoStudio?: (mode?: 'text' | 'image') => void;
 }
 
 export const EducationSection: React.FC<EducationSectionProps> = ({
   lang,
-  videoUrl,
-  onOpenVideoStudio,
 }) => {
   const t = TRANSLATIONS[lang];
 
@@ -22,11 +18,7 @@ export const EducationSection: React.FC<EducationSectionProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="glass-panel rounded-3xl p-6 sm:p-9 relative overflow-hidden">
           {/* Ambient Cinematic Looping Background Layer */}
-          <AmbientCinematicBackground
-            lang={lang}
-            videoUrl={videoUrl}
-            onOpenVideoStudio={onOpenVideoStudio}
-          />
+          <AmbientCinematicBackground />
 
           <div className="relative z-10">
           {/* Header */}

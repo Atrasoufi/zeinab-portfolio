@@ -18,7 +18,6 @@ import { BlogModal } from './components/BlogModal';
 import { GithubModal } from './components/GithubModal';
 import { SkillDetailModal } from './components/SkillDetailModal';
 import { DjangoArchitectureModal } from './components/DjangoArchitectureModal';
-import { AIVideoStudioModal } from './components/AIVideoStudioModal';
 import { InteractiveThreeScene } from './components/InteractiveThreeScene';
 
 import { ProjectItem, PERSONAL_INFO } from './data/portfolioData';
@@ -37,12 +36,6 @@ export default function App() {
   const [isGithubOpen, setIsGithubOpen] = useState(false);
   const [isDjangoOpen, setIsDjangoOpen] = useState(false);
   const [selectedSkillName, setSelectedSkillName] = useState<string | null>(null);
-  const [isVideoStudioOpen, setIsVideoStudioOpen] = useState(false);
-  const [videoStudioInitialMode, setVideoStudioInitialMode] = useState<'image' | 'text'>('image');
-
-  // Video loop states
-  const [heroVideoUrl, setHeroVideoUrl] = useState<string | null>(null);
-  const [ambientVideoUrl, setAmbientVideoUrl] = useState<string | null>(null);
 
   // Sync document language, direction, and title
   useEffect(() => {
@@ -74,8 +67,7 @@ export default function App() {
         isBlogOpen ||
         isGithubOpen ||
         isDjangoOpen ||
-        selectedSkillName ||
-        isVideoStudioOpen
+        selectedSkillName
     );
     if (isAnyModalOpen) {
       const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
@@ -99,7 +91,6 @@ export default function App() {
     isGithubOpen,
     isDjangoOpen,
     selectedSkillName,
-    isVideoStudioOpen,
   ]);
 
   const handleToggleLang = () => {
@@ -118,11 +109,6 @@ export default function App() {
   const handleScrollToContact = () => {
     const el = document.getElementById('contact');
     if (el) el.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const handleOpenVideoStudio = (mode: 'image' | 'text' = 'image') => {
-    setVideoStudioInitialMode(mode);
-    setIsVideoStudioOpen(true);
   };
 
   return (
@@ -154,7 +140,6 @@ export default function App() {
         onOpenCvModal={() => setIsCvOpen(true)}
         onOpenBlogModal={() => setIsBlogOpen(true)}
         onOpenDjangoModal={() => setIsDjangoOpen(true)}
-        onOpenVideoStudio={() => handleOpenVideoStudio('image')}
         activeSection={activeSection}
       />
 
@@ -164,8 +149,6 @@ export default function App() {
           lang={lang}
           onExploreProjects={handleScrollToProjects}
           onOpenGithubModal={() => setIsGithubOpen(true)}
-          onOpenVideoStudio={handleOpenVideoStudio}
-          heroVideoUrl={heroVideoUrl}
         />
 
         <BentoGridFirstRow
@@ -188,11 +171,7 @@ export default function App() {
           </div>
         </section>
 
-        <EducationSection
-          lang={lang}
-          videoUrl={ambientVideoUrl}
-          onOpenVideoStudio={handleOpenVideoStudio}
-        />
+        <EducationSection lang={lang} />
 
         <ContactSection lang={lang} />
       </main>
@@ -245,15 +224,6 @@ export default function App() {
         isOpen={isDjangoOpen}
         lang={lang}
         onClose={() => setIsDjangoOpen(false)}
-      />
-
-      <AIVideoStudioModal
-        isOpen={isVideoStudioOpen}
-        lang={lang}
-        onClose={() => setIsVideoStudioOpen(false)}
-        initialMode={videoStudioInitialMode}
-        onApplyToHero={(url) => setHeroVideoUrl(url)}
-        onApplyToBackground={(url) => setAmbientVideoUrl(url)}
       />
     </div>
   );

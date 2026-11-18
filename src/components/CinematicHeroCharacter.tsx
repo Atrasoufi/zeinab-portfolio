@@ -1,20 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Sparkles, Film, Play, Pause, RefreshCw, Wand2 } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 import { Language } from '../data/translations';
 
 interface CinematicHeroCharacterProps {
   lang: Language;
-  onOpenVideoStudio: (initialMode?: 'image' | 'text') => void;
-  generatedVideoUrl?: string | null;
 }
 
 export const CinematicHeroCharacter: React.FC<CinematicHeroCharacterProps> = ({
   lang,
-  onOpenVideoStudio,
-  generatedVideoUrl,
 }) => {
   const [isCinematicActive, setIsCinematicActive] = useState(true);
-  const [isPlayingVideo, setIsPlayingVideo] = useState(true);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
   // Check reduced motion preference
@@ -92,53 +87,38 @@ export const CinematicHeroCharacter: React.FC<CinematicHeroCharacterProps> = ({
 
       {/* Character Visual Container */}
       <div className="relative w-full overflow-hidden rounded-2xl flex items-center justify-center">
-        {generatedVideoUrl ? (
-          /* Render Generated AI Video Loop if available */
-          <div className="relative w-full aspect-[4/5] overflow-hidden rounded-2xl border border-[#F12D91]/40 shadow-[0_0_35px_rgba(241,45,145,0.4)]">
-            <video
-              src={generatedVideoUrl}
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-[#0B080F]/80 via-transparent to-transparent" />
-          </div>
-        ) : (
-          /* Cinematic Layered Hero Artwork */
-          <div className="relative w-full flex items-center justify-center">
-            {/* Base Master Illustration */}
-            <img
-              src="/public/assets/portfolio/hero_girl_clean.png"
-              alt="Zeinab Soufi - Backend Developer Illustration"
-              className={`w-full h-auto object-contain filter drop-shadow-[0_0_30px_rgba(241,45,145,0.45)] transition-all duration-700 ${
-                isCinematicActive && !prefersReducedMotion
-                  ? 'hover:scale-[1.03] scale-[1.01]'
-                  : 'scale-100'
-              }`}
-              style={{
-                maskImage:
-                  'radial-gradient(ellipse 92% 90% at 52% 48%, black 68%, transparent 100%)',
-                WebkitMaskImage:
-                  'radial-gradient(ellipse 92% 90% at 52% 48%, black 68%, transparent 100%)',
-              }}
-            />
+        {/* Cinematic Layered Hero Artwork */}
+        <div className="relative w-full flex items-center justify-center">
+          {/* Base Master Illustration */}
+          <img
+            src="/public/assets/portfolio/hero_girl_clean.png"
+            alt="Zeinab Soufi - Backend Developer Illustration"
+            className={`w-full h-auto object-contain filter drop-shadow-[0_0_30px_rgba(241,45,145,0.45)] transition-all duration-700 ${
+              isCinematicActive && !prefersReducedMotion
+                ? 'hover:scale-[1.03] scale-[1.01]'
+                : 'scale-100'
+            }`}
+            style={{
+              maskImage:
+                'radial-gradient(ellipse 92% 90% at 52% 48%, black 68%, transparent 100%)',
+              WebkitMaskImage:
+                'radial-gradient(ellipse 92% 90% at 52% 48%, black 68%, transparent 100%)',
+            }}
+          />
 
-            {/* Cinematic Lighting & Subtle Natural Hair/Glow Overlay */}
-            {isCinematicActive && !prefersReducedMotion && (
-              <div
-                className="absolute inset-0 pointer-events-none mix-blend-screen opacity-70 transition-opacity duration-1000"
-                style={{
-                  background:
-                    'radial-gradient(circle at 75% 35%, rgba(241, 45, 145, 0.4) 0%, rgba(184, 77, 255, 0.2) 35%, transparent 70%)',
-                  animation: 'heroGlowBreathe 5s ease-in-out infinite alternate',
-                }}
-                aria-hidden="true"
-              />
-            )}
-          </div>
-        )}
+          {/* Cinematic Lighting & Subtle Natural Hair/Glow Overlay */}
+          {isCinematicActive && !prefersReducedMotion && (
+            <div
+              className="absolute inset-0 pointer-events-none mix-blend-screen opacity-70 transition-opacity duration-1000"
+              style={{
+                background:
+                  'radial-gradient(circle at 75% 35%, rgba(241, 45, 145, 0.4) 0%, rgba(184, 77, 255, 0.2) 35%, transparent 70%)',
+                animation: 'heroGlowBreathe 5s ease-in-out infinite alternate',
+              }}
+              aria-hidden="true"
+            />
+          )}
+        </div>
       </div>
 
       {/* Cinematic Experience Control Bar */}
@@ -172,17 +152,6 @@ export const CinematicHeroCharacter: React.FC<CinematicHeroCharacterProps> = ({
               ? 'Cinematic Live'
               : 'Static View'}
           </span>
-        </button>
-
-        {/* Generate / Animate with AI Video Button */}
-        <button
-          type="button"
-          onClick={() => onOpenVideoStudio('image')}
-          className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono bg-[#160D20] text-[#D58BFF] border border-[#B84DFF]/40 hover:border-[#FF85C0] hover:text-white transition-all shadow-[0_0_12px_rgba(184,77,255,0.2)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF85C0]"
-          aria-label={isRtl ? 'متحرک‌سازی کاراکتر با هوش مصنوعی (ویدیو)' : 'Animate character with Gemini Omni video'}
-        >
-          <Film size={12} aria-hidden="true" />
-          <span>{isRtl ? 'ویدیو هوش مصنوعی' : 'Animate to Video'}</span>
         </button>
       </div>
     </div>

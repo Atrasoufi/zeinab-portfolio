@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { NeonButterfly } from './NeonButterfly';
 import { TRANSLATIONS, Language } from '../data/translations';
-import { Download, Sun, Moon, Menu, X, BookOpen, Film } from 'lucide-react';
+import { Download, Sun, Moon, Menu, X, BookOpen } from 'lucide-react';
 
 interface HeaderProps {
   lang: Language;
@@ -11,7 +11,6 @@ interface HeaderProps {
   onOpenCvModal: () => void;
   onOpenBlogModal: () => void;
   onOpenDjangoModal: () => void;
-  onOpenVideoStudio: () => void;
   activeSection?: string;
 }
 
@@ -23,7 +22,6 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenCvModal,
   onOpenBlogModal,
   onOpenDjangoModal,
-  onOpenVideoStudio,
   activeSection = 'hero',
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -127,20 +125,6 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Right Action Tools: Language, Theme & Download CV */}
         <div className="hidden sm:flex items-center gap-3">
-          {/* AI Video Studio Button */}
-          <button
-            type="button"
-            onClick={onOpenVideoStudio}
-            className="px-3 py-1.5 rounded-lg bg-[#160D20] border border-[#F12D91]/40 text-[#FF85C0] hover:border-[#FF85C0] hover:text-white text-xs font-mono transition-all flex items-center gap-1.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF85C0]"
-            title="Open Gemini Omni AI Video Studio"
-            aria-label="Open Gemini Omni AI Video Studio"
-            aria-haspopup="dialog"
-          >
-            <Film size={14} aria-hidden="true" />
-            <span className="hidden xl:inline">{lang === 'fa' ? 'استودیو ویدیو هوش مصنوعی' : 'AI Video Studio'}</span>
-            <span className="xl:hidden">{lang === 'fa' ? 'ویدیو AI' : 'AI Video'}</span>
-          </button>
-
           {/* Django Architecture Inspector Button */}
           <button
             type="button"
@@ -260,16 +244,6 @@ export const Header: React.FC<HeaderProps> = ({
               className="text-left rtl:text-right px-3 py-2 text-sm font-medium text-white hover:bg-[#F12D91]/15 rounded-lg"
             >
               {t.nav.contact}
-            </button>
-            <button
-              onClick={() => {
-                setMobileMenuOpen(false);
-                onOpenVideoStudio();
-              }}
-              className="text-left rtl:text-right px-3 py-2 text-sm font-medium text-[#FF85C0] hover:bg-[#F12D91]/15 rounded-lg flex items-center gap-2"
-            >
-              <Film size={16} aria-hidden="true" />
-              <span>{lang === 'fa' ? 'استودیو ویدیو هوش مصنوعی (Gemini)' : 'AI Video Studio (Gemini Omni)'}</span>
             </button>
           </div>
 

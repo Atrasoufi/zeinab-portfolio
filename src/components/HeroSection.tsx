@@ -9,16 +9,12 @@ interface HeroSectionProps {
   lang: Language;
   onExploreProjects: () => void;
   onOpenGithubModal: () => void;
-  onOpenVideoStudio: (initialMode?: 'image' | 'text') => void;
-  heroVideoUrl?: string | null;
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({
   lang,
   onExploreProjects,
   onOpenGithubModal,
-  onOpenVideoStudio,
-  heroVideoUrl,
 }) => {
   const [copied, setCopied] = useState(false);
   const [testingResponse, setTestingResponse] = useState(false);
@@ -265,11 +261,7 @@ class Developer(APIView):
 
           {/* RIGHT COLUMN: Cinematic Illustrated Developer Character (Interactive Visual Experience) */}
           <div className="lg:col-span-3 z-10 flex flex-col items-center justify-center relative">
-            <CinematicHeroCharacter
-              lang={lang}
-              onOpenVideoStudio={onOpenVideoStudio}
-              generatedVideoUrl={heroVideoUrl}
-            />
+            <CinematicHeroCharacter lang={lang} />
           </div>
 
         </div>
