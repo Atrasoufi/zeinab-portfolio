@@ -2,7 +2,7 @@ import React from 'react';
 import { PERSONAL_INFO, EDUCATION_DATA } from '../data/portfolioData';
 import { TRANSLATIONS, Language } from '../data/translations';
 import { useFocusTrap } from '../hooks/useFocusTrap';
-import { X, Printer, Mail, Github, MapPin, CheckCircle, GraduationCap, Briefcase } from 'lucide-react';
+import { X, Printer, Mail, Github, MapPin, GraduationCap } from 'lucide-react';
 
 interface CvModalProps {
   isOpen: boolean;

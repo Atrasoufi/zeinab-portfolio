@@ -23,20 +23,15 @@ export const SparkleCanvas: React.FC = () => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) return;
+    const mediaQuery =
+      typeof window.matchMedia === 'function'
+        ? window.matchMedia('(prefers-reduced-motion: reduce)')
+        : null;
+    let reducedMotion = mediaQuery ? mediaQuery.matches : false;
 
-    let animationFrameId: number;
+    let animationFrameId = 0;
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
-
-    const handleResize = () => {
-      if (!canvas) return;
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-    };
-
-    window.addEventListener('resize', handleResize);
 
     const particleCount = Math.min(65, Math.floor((width * height) / 22000));
     const colors = ['#FFFFFF', '#FF85C0', '#F12D91', '#D58BFF', '#B84DFF'];
@@ -88,21 +83,23 @@ export const SparkleCanvas: React.FC = () => {
       context.fill();
     };
 
-    const render = () => {
+    const drawFrame = (advanceMotion: boolean) => {
       ctx.clearRect(0, 0, width, height);
 
       particles.forEach((p) => {
-        p.x += p.speedX;
-        p.y += p.speedY;
+        if (advanceMotion) {
+          p.x += p.speedX;
+          p.y += p.speedY;
 
-        if (p.x < 0) p.x = width;
-        if (p.x > width) p.x = 0;
-        if (p.y < 0) p.y = height;
-        if (p.y > height) p.y = 0;
+          if (p.x < 0) p.x = width;
+          if (p.x > width) p.x = 0;
+          if (p.y < 0) p.y = height;
+          if (p.y > height) p.y = 0;
 
-        p.opacity += p.opacitySpeed;
-        if (p.opacity > p.maxOpacity || p.opacity < 0.15) {
-          p.opacitySpeed = -p.opacitySpeed;
+          p.opacity += p.opacitySpeed;
+          if (p.opacity > p.maxOpacity || p.opacity < 0.15) {
+            p.opacitySpeed = -p.opacitySpeed;
+          }
         }
 
         ctx.save();
@@ -120,15 +117,72 @@ export const SparkleCanvas: React.FC = () => {
         }
         ctx.restore();
       });
+    };
 
+    const stopLoop = () => {
+      if (animationFrameId !== 0) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = 0;
+      }
+    };
+
+    const render = () => {
+      animationFrameId = 0;
+      if (reducedMotion || document.hidden) return;
+      drawFrame(true);
       animationFrameId = requestAnimationFrame(render);
     };
 
-    render();
+    const syncLoop = () => {
+      if (reducedMotion || document.hidden) {
+        stopLoop();
+        drawFrame(false);
+      } else if (animationFrameId === 0) {
+        animationFrameId = requestAnimationFrame(render);
+      }
+    };
+
+    const handleResize = () => {
+      if (!canvas) return;
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      if (reducedMotion) {
+        drawFrame(false);
+      }
+    };
+
+    const handleMotionChange = (e: MediaQueryListEvent) => {
+      reducedMotion = e.matches;
+      syncLoop();
+    };
+
+    const handleVisibilityChange = () => {
+      syncLoop();
+    };
+
+    window.addEventListener('resize', handleResize);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    if (mediaQuery) {
+      if (typeof mediaQuery.addEventListener === 'function') {
+        mediaQuery.addEventListener('change', handleMotionChange);
+      } else if (typeof mediaQuery.addListener === 'function') {
+        mediaQuery.addListener(handleMotionChange);
+      }
+    }
+
+    syncLoop();
 
     return () => {
       window.removeEventListener('resize', handleResize);
-      cancelAnimationFrame(animationFrameId);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      if (mediaQuery) {
+        if (typeof mediaQuery.removeEventListener === 'function') {
+          mediaQuery.removeEventListener('change', handleMotionChange);
+        } else if (typeof mediaQuery.removeListener === 'function') {
+          mediaQuery.removeListener(handleMotionChange);
+        }
+      }
+      stopLoop();
     };
   }, []);
 

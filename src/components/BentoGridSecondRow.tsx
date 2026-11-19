@@ -45,9 +45,9 @@ export const BentoGridSecondRow: React.FC<BentoGridSecondRowProps> = ({
   };
 
   const projectThumbnails = {
-    'portfolio-website': '/public/assets/portfolio/project1_icon_trans.png',
-    'ecommerce-api': '/public/assets/portfolio/project2_icon_trans.png',
-    'chat-service': '/public/assets/portfolio/project3_icon_trans.png',
+    'portfolio-website': '/assets/portfolio/project1_icon_trans.png',
+    'ecommerce-api': '/assets/portfolio/project2_icon_trans.png',
+    'chat-service': '/assets/portfolio/project3_icon_trans.png',
   };
 
   return (

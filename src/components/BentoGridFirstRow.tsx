@@ -185,7 +185,7 @@ export const BentoGridFirstRow: React.FC<BentoGridFirstRowProps> = ({
           >
             {/* Glowing Neon Butterfly from reference design (transparent with screen blend mode) */}
             <img
-              src="/public/assets/portfolio/card_butterfly_trans.png"
+              src="/assets/portfolio/card_butterfly_trans.png"
               alt=""
               aria-hidden="true"
               className="absolute top-2 right-2 rtl:right-auto rtl:left-2 w-28 h-28 object-contain pointer-events-none drop-shadow-[0_0_20px_#F12D91] group-hover:scale-105 transition-transform opacity-95"

@@ -58,7 +58,7 @@ export const Header: React.FC<HeaderProps> = ({
         >
           <div className="relative flex items-center justify-center p-1 rounded-2xl bg-[#160D20] border border-[#F12D91]/40 group-hover:border-[#F12D91] shadow-[0_0_20px_rgba(241,45,145,0.35)] transition-all">
             <img
-              src="/public/assets/portfolio/logo_butterfly_trans.png"
+              src="/assets/portfolio/logo_butterfly_trans.png"
               alt="Zeinab Soufi"
               className="w-9 h-9 object-contain drop-shadow-[0_0_15px_#F12D91]"
               style={{ mixBlendMode: 'screen' }}

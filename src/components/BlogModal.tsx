@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { BLOG_POSTS, BlogPost } from '../data/portfolioData';
 import { TRANSLATIONS, Language } from '../data/translations';
 import { useFocusTrap } from '../hooks/useFocusTrap';
-import { X, BookOpen, Clock, Calendar, ArrowRight, ArrowLeft } from 'lucide-react';
+import { X, BookOpen, Clock, ArrowRight, ArrowLeft } from 'lucide-react';
 
 interface BlogModalProps {
   isOpen: boolean;

@@ -21,8 +21,9 @@ export const Footer: React.FC<FooterProps> = ({ lang, onOpenDjangoModal }) => {
           {/* Centered Small Neon Butterfly Badge */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 px-3 bg-[#08040D] flex items-center justify-center">
             <img
-              src="/public/assets/portfolio/logo_butterfly_trans.png"
-              alt="Butterfly Badge"
+              src="/assets/portfolio/logo_butterfly_trans.png"
+              alt=""
+              aria-hidden="true"
               className="w-6 h-6 object-contain drop-shadow-[0_0_10px_#F12D91]"
               style={{ mixBlendMode: 'screen' }}
             />
@@ -34,8 +35,8 @@ export const Footer: React.FC<FooterProps> = ({ lang, onOpenDjangoModal }) => {
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left rtl:md:text-right text-xs">
           {/* Left: Copyright */}
           <div className="text-[#8E79A5] font-mono flex items-center gap-1.5 justify-center md:justify-start">
-            <span>© 2025 Zeinab Soufi. All rights reserved.</span>
-            <span className="text-[#FF4DB8]">🤍</span>
+            <span>{t.footer.copyright}</span>
+            <span className="text-[#FF4DB8]" aria-hidden="true">🤍</span>
           </div>
 
           {/* Center: Thank you message with Django inspector */}
@@ -69,25 +70,29 @@ export const Footer: React.FC<FooterProps> = ({ lang, onOpenDjangoModal }) => {
               <Github size={15} aria-hidden="true" />
             </a>
 
-            <a
-              href={PERSONAL_INFO.linkedinUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2 rounded-xl bg-[#160D20] border border-[#F12D91]/30 hover:border-[#FF85C0] text-[#FF85C0] hover:text-white transition-all shadow-[0_0_10px_rgba(241,45,145,0.15)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF85C0]"
-              aria-label="LinkedIn Profile"
-            >
-              <Linkedin size={15} aria-hidden="true" />
-            </a>
+            {PERSONAL_INFO.linkedinUrl && (
+              <a
+                href={PERSONAL_INFO.linkedinUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 rounded-xl bg-[#160D20] border border-[#F12D91]/30 hover:border-[#FF85C0] text-[#FF85C0] hover:text-white transition-all shadow-[0_0_10px_rgba(241,45,145,0.15)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF85C0]"
+                aria-label="LinkedIn Profile"
+              >
+                <Linkedin size={15} aria-hidden="true" />
+              </a>
+            )}
 
-            <a
-              href={PERSONAL_INFO.telegramUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2 rounded-xl bg-[#160D20] border border-[#F12D91]/30 hover:border-[#FF85C0] text-[#FF85C0] hover:text-white transition-all shadow-[0_0_10px_rgba(241,45,145,0.15)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF85C0]"
-              aria-label="Telegram"
-            >
-              <Send size={15} aria-hidden="true" />
-            </a>
+            {PERSONAL_INFO.telegramUrl && (
+              <a
+                href={PERSONAL_INFO.telegramUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 rounded-xl bg-[#160D20] border border-[#F12D91]/30 hover:border-[#FF85C0] text-[#FF85C0] hover:text-white transition-all shadow-[0_0_10px_rgba(241,45,145,0.15)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF85C0]"
+                aria-label="Telegram"
+              >
+                <Send size={15} aria-hidden="true" />
+              </a>
+            )}
 
             <a
               href={`mailto:${PERSONAL_INFO.email}`}

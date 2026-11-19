@@ -43,7 +43,24 @@ export interface BlogPost {
   contentFa: string[];
 }
 
-export const PERSONAL_INFO = {
+export const PERSONAL_INFO: {
+  name: string;
+  shortName: string;
+  nameFa: string;
+  shortNameFa: string;
+  role: string;
+  roleFa: string;
+  tagline: string;
+  taglineFa: string;
+  bio: string;
+  bioFa: string;
+  email: string;
+  githubUrl: string;
+  linkedinUrl?: string;
+  telegramUrl?: string;
+  location: string;
+  locationFa: string;
+} = {
   name: 'Zeinab Soufi Neyestani',
   shortName: 'Zeinab Soufi',
   nameFa: 'زینب صوفی نیستانی',
@@ -56,8 +73,6 @@ export const PERSONAL_INFO = {
   bioFa: 'توسعه‌دهنده متعهد بک‌اند با تمرکز بر پایتون، جنگو و طراحی سیستم‌های امن، مقیاس‌پذیر و پایدار.',
   email: 'z.soofi.n@gmail.com',
   githubUrl: 'https://github.com/Atrasoufi',
-  linkedinUrl: 'https://www.linkedin.com',
-  telegramUrl: 'https://t.me',
   location: 'Tehran, Iran',
   locationFa: 'تهران، ایران',
 };
@@ -169,36 +184,36 @@ export const FEATURED_PROJECTS: ProjectItem[] = [
     id: 'portfolio-website',
     title: 'Personal Portfolio Website',
     titleFa: 'وب‌سایت شخصی و پورتفولیو',
-    shortDesc: 'Interactive dark-pink neon glassmorphism portfolio with complete bilingual support (FA/EN) and Django architecture readiness.',
-    shortDescFa: 'پورتفولیوی تعاملی دارک‌نئون با استایل گلس‌مورفیسم، پشتیبانی دوزبانه کامل و معماری آماده اتصال به تمپلیت‌های جنگو.',
+    shortDesc: 'Interactive dark-pink neon glassmorphism portfolio built with React, TypeScript, Vite, and Three.js, featuring complete bilingual support (FA/EN) and a conceptual Django architecture blueprint.',
+    shortDescFa: 'پورتفولیوی تعاملی دارک‌نئون با React، TypeScript، Vite و Three.js، پشتیبانی دوزبانه کامل و مستندسازی معماری پیشنهادی جنگو.',
     status: 'Active',
     statusFa: 'در حال توسعه فعال',
-    tags: ['React', 'TypeScript', 'Tailwind CSS', 'Django Ready', 'i18n'],
+    tags: ['React', 'TypeScript', 'Vite', 'Three.js', 'i18n'],
     iconType: 'butterfly',
     challenges: [
-      'Maintaining 60fps glassmorphism and ambient particle animation without causing frame drops.',
+      'Maintaining smooth glassmorphism and ambient particle animation while respecting prefers-reduced-motion.',
       'Full bilingual RTL/LTR dynamic typography (Vazirmatn for Persian, Outfit/Plus Jakarta Sans for English).',
-      'Architecting reusable HTML/CSS components directly portable into Django templates.',
+      'Implementing WCAG 2.2 AA focus trapping and keyboard navigation across all interactive dialogs.',
     ],
     challengesFa: [
-      'اجرای روان انیمیشن‌های ذرات و افکت‌های گلس‌مورفیسم بدون افت فریم در نمایشگرهای مختلف.',
-      'مدیریت روان ساختار دوزبانه راست‌به‌چپ و چپ‌به‌دست با فونت‌های بهینه‌سازی شده وزیرمتن و اوت‌فیت.',
-      'طراحی ماژولار کامپوننت‌ها جهت سهولت انتقال به تگ‌های include جنگو.',
+      'اجرای روان انیمیشن‌های ذرات و افکت‌های گلس‌مورفیسم با رعایت تنظیمات prefers-reduced-motion.',
+      'مدیریت روان ساختار دوزبانه راست‌به‌چپ و چپ‌به‌راست با فونت‌های بهینه‌سازی شده وزیرمتن و اوت‌فیت.',
+      'پیاده‌سازی استانداردهای دسترسی‌پذیری WCAG 2.2 AA و مدیریت فوکوس کیبورد در تمام مودال‌ها.',
     ],
     implementationDetails: [
-      'Pure CSS variables for dynamic neon glow and theme tokens.',
-      'Accessible dialog modals with keyboard Escape listeners and focus rings.',
-      'Interactive Python terminal simulator demonstrating Django REST endpoints.',
+      'CSS custom properties for dynamic neon glow and light/dark theme tokens.',
+      'Accessible dialog modals with Escape handling, focus trapping, and trigger restoration.',
+      'Interactive Python code preview demonstrating an example Django REST endpoint response.',
     ],
     implementationDetailsFa: [
-      'استفاده از متغیرهای CSS مدرن برای رنگ‌های نئونی و درخشش بدون وابستگی سنگین.',
-      'مودال‌های منطبق بر استانداردهای دسترسی‌پذیری و پشتیبانی از کلید Escape.',
-      'شبیه‌ساز پنجره ترمینال پایتون با امکان کپی کد و تست تعاملی پاسخ API.',
+      'استفاده از متغیرهای CSS مدرن برای رنگ‌های نئونی و تم تاریک/روشن.',
+      'مودال‌های منطبق بر استانداردهای دسترسی‌پذیری با تله فوکوس، کلید Escape و بازگشت فوکوس.',
+      'پیش‌نمایش تعاملی کد پایتون برای نمایش نمونه پاسخ استاندارد API جنگو.',
     ],
     endpoints: [
-      { method: 'GET', path: '/api/v1/profile/', desc: 'Returns developer bio, status, and active stacks', descFa: 'اطلاعات بیوگرافی و استک‌های فعال' },
-      { method: 'GET', path: '/api/v1/projects/', desc: 'Lists featured projects with technology tags', descFa: 'لیست پروژه‌های منتخب و فناوری‌ها' },
-      { method: 'POST', path: '/api/v1/contact/', desc: 'Receives and validates contact messages', descFa: 'ثبت و اعتبارسنجی پیام‌های تماس' },
+      { method: 'GET', path: '/api/v1/profile/', desc: 'Sample blueprint schema: developer bio and active stacks', descFa: 'طرح نمونه API: اطلاعات بیوگرافی و استک‌های فعال' },
+      { method: 'GET', path: '/api/v1/projects/', desc: 'Sample blueprint schema: featured projects list', descFa: 'طرح نمونه API: لیست پروژه‌های منتخب' },
+      { method: 'POST', path: '/api/v1/contact/', desc: 'Sample blueprint schema: contact inquiry payload', descFa: 'طرح نمونه API: ساختار پیام تماس' },
     ],
     githubUrl: 'https://github.com/Atrasoufi/zeinab-portfolio',
   },

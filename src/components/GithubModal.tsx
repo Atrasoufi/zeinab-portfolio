@@ -1,5 +1,5 @@
 import React from 'react';
-import { PERSONAL_INFO, GITHUB_ACTIVITY_DATA } from '../data/portfolioData';
+import { PERSONAL_INFO } from '../data/portfolioData';
 import { TRANSLATIONS, Language } from '../data/translations';
 import { useFocusTrap } from '../hooks/useFocusTrap';
 import { X, Github, ExternalLink, GitBranch, Star, BookMarked } from 'lucide-react';
@@ -23,9 +23,9 @@ export const GithubModal: React.FC<GithubModalProps> = ({
   const repositories = [
     {
       name: 'zeinab-portfolio',
-      desc: 'Bilingual dark neon glassmorphism portfolio with Django architecture readiness.',
-      descFa: 'پورتفولیوی شخصی با استایل دارک نئون و آمادگی کامل برای اتصال به جنگو.',
-      language: 'TypeScript / Python',
+      desc: 'Bilingual dark neon glassmorphism portfolio built with React, TypeScript, Vite, and Three.js.',
+      descFa: 'پورتفولیوی شخصی دوزبانه با React، TypeScript، Vite و Three.js.',
+      language: 'TypeScript / React',
       stars: 12,
       forks: 3,
     },

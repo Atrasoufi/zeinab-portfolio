@@ -128,7 +128,7 @@ class Developer(APIView):
           {/* Flying Neon Butterfly between Hero Left and Terminal (in the ambient space, not overlapping code) */}
           <div className="hidden lg:block absolute left-[38%] top-16 z-0 pointer-events-none animate-float select-none" aria-hidden="true">
             <img
-              src="/public/assets/portfolio/hero_butterfly_trans.png"
+              src="/assets/portfolio/hero_butterfly_trans.png"
               alt=""
               className="w-24 h-24 object-contain filter drop-shadow-[0_0_20px_#F12D91] opacity-90"
               style={{ mixBlendMode: 'screen' }}

@@ -46,7 +46,7 @@ export const CinematicHeroCharacter: React.FC<CinematicHeroCharacterProps> = ({
         aria-hidden="true"
       >
         <img
-          src="/public/assets/portfolio/card_butterfly_trans.png"
+          src="/assets/portfolio/card_butterfly_trans.png"
           alt=""
           className="w-16 h-16 sm:w-20 sm:h-20 object-contain filter drop-shadow-[0_0_15px_#F12D91] opacity-90"
           style={{ mixBlendMode: 'screen' }}
@@ -61,7 +61,7 @@ export const CinematicHeroCharacter: React.FC<CinematicHeroCharacterProps> = ({
           aria-hidden="true"
         >
           <img
-            src="/public/assets/portfolio/hero_butterfly_trans.png"
+            src="/assets/portfolio/hero_butterfly_trans.png"
             alt=""
             className="w-14 h-14 object-contain filter drop-shadow-[0_0_12px_#B84DFF] opacity-80"
             style={{ mixBlendMode: 'screen' }}
@@ -91,7 +91,7 @@ export const CinematicHeroCharacter: React.FC<CinematicHeroCharacterProps> = ({
         <div className="relative w-full flex items-center justify-center">
           {/* Base Master Illustration */}
           <img
-            src="/public/assets/portfolio/hero_girl_clean.png"
+            src="/assets/portfolio/hero_girl_clean.png"
             alt="Zeinab Soufi - Backend Developer Illustration"
             className={`w-full h-auto object-contain filter drop-shadow-[0_0_30px_rgba(241,45,145,0.45)] transition-all duration-700 ${
               isCinematicActive && !prefersReducedMotion

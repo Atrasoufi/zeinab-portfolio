@@ -1,9 +1,8 @@
 import React from 'react';
-import { NeonButterfly } from './NeonButterfly';
 import { PERSONAL_INFO } from '../data/portfolioData';
 import { TRANSLATIONS, Language } from '../data/translations';
 import { useFocusTrap } from '../hooks/useFocusTrap';
-import { X, User, Heart, Terminal, Shield, Cpu, ArrowRight } from 'lucide-react';
+import { X, User, Terminal, Shield, Cpu, ArrowRight } from 'lucide-react';
 
 interface AboutModalProps {
   isOpen: boolean;

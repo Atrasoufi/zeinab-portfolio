@@ -16,15 +16,17 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
   const [error, setError] = useState(false);
   const t = TRANSLATIONS[lang];
 
+  const isValidEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
+
   const handleSendEmail = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name.trim() || !email.trim() || !message.trim() || !email.includes('@')) {
+    if (!name.trim() || !isValidEmail(email) || !message.trim()) {
       setError(true);
       return;
     }
     setError(false);
-    const subject = encodeURIComponent(`Portfolio Inquiry from ${name}`);
-    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
+    const subject = encodeURIComponent(`Portfolio Inquiry from ${name.trim()}`);
+    const body = encodeURIComponent(`Name: ${name.trim()}\nEmail: ${email.trim()}\n\nMessage:\n${message.trim()}`);
     window.location.href = `mailto:${PERSONAL_INFO.email}?subject=${subject}&body=${body}`;
   };
 
@@ -34,7 +36,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
       sender_email: email || 'alex@example.com',
       message: message || 'Interested in backend engineering collaboration.',
       client_timestamp: new Date().toISOString(),
-      endpoint: '/api/v1/contact/',
+      sample_endpoint: '/api/v1/contact/ (API Integration Preview — not called)',
     },
     null,
     2
@@ -108,26 +110,28 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
                 <ExternalLink size={16} className="text-[#8E79A5] group-hover:text-[#FF85C0] transition-colors" />
               </a>
 
-              {/* LinkedIn */}
-              <a
-                href={PERSONAL_INFO.linkedinUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-4 rounded-2xl bg-[#160D20] border border-[#F12D91]/30 hover:border-[#FF85C0] hover:bg-[#221332] transition-all flex items-center justify-between group"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="p-2.5 rounded-xl bg-[#2D143D] text-[#D58BFF]">
-                    <Linkedin size={20} />
-                  </div>
-                  <div>
-                    <div className="text-xs text-[#8E79A5] font-mono">{t.contact.linkedin}</div>
-                    <div className="text-sm font-bold text-white group-hover:text-[#FF85C0] transition-colors">
-                      linkedin.com/in/zeinab-soufi
+              {/* LinkedIn (rendered only when verified URL exists) */}
+              {PERSONAL_INFO.linkedinUrl && (
+                <a
+                  href={PERSONAL_INFO.linkedinUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-4 rounded-2xl bg-[#160D20] border border-[#F12D91]/30 hover:border-[#FF85C0] hover:bg-[#221332] transition-all flex items-center justify-between group"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="p-2.5 rounded-xl bg-[#2D143D] text-[#D58BFF]">
+                      <Linkedin size={20} aria-hidden="true" />
+                    </div>
+                    <div>
+                      <div className="text-xs text-[#8E79A5] font-mono">{t.contact.linkedin}</div>
+                      <div className="text-sm font-bold text-white group-hover:text-[#FF85C0] transition-colors">
+                        {PERSONAL_INFO.linkedinUrl.replace(/^https?:\/\//, '')}
+                      </div>
                     </div>
                   </div>
-                </div>
-                <ExternalLink size={16} className="text-[#8E79A5] group-hover:text-[#FF85C0] transition-colors" />
-              </a>
+                  <ExternalLink size={16} aria-hidden="true" className="text-[#8E79A5] group-hover:text-[#FF85C0] transition-colors" />
+                </a>
+              )}
 
               {/* Location Badge */}
               <div className="p-4 rounded-xl bg-[#100817] border border-[#B84DFF]/25 text-xs text-[#BDA9C9] flex items-center justify-between font-mono">
@@ -143,16 +147,16 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
                   {t.contact.formTitle}
                 </h3>
                 <span className="text-[11px] font-mono text-[#D58BFF] px-2.5 py-1 rounded bg-[#100817] border border-[#B84DFF]/30">
-                  Django REST Ready
+                  mailto: Draft
                 </span>
               </div>
 
-              {/* Transparent prototype notice */}
+              {/* Transparent email-client notice */}
               <div className="mb-5 p-3 rounded-xl bg-[#221332]/70 border border-[#F12D91]/25 text-xs text-[#BDA9C9] leading-relaxed">
                 💡 {t.contact.formNotice}
               </div>
 
-              <form onSubmit={handleSendEmail} className="space-y-4">
+              <form onSubmit={handleSendEmail} noValidate className="space-y-4">
                 {error && (
                   <div role="alert" aria-live="assertive" className="p-2.5 rounded-lg bg-red-950/80 border border-red-500/50 text-xs text-red-200">
                     {t.contact.validationError}
@@ -185,7 +189,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
                       type="email"
                       required
                       aria-required="true"
-                      aria-invalid={error && (!email.trim() || !email.includes('@')) ? 'true' : 'false'}
+                      aria-invalid={error && !isValidEmail(email) ? 'true' : 'false'}
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder={t.contact.emailPlaceholder}

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { TRANSLATIONS, Language } from '../data/translations';
 import { useFocusTrap } from '../hooks/useFocusTrap';
-import { X, Folder, FileCode, CheckCircle2, Copy, Check } from 'lucide-react';
+import { X, Folder, Copy, Check } from 'lucide-react';
 
 interface DjangoArchitectureModalProps {
   isOpen: boolean;
@@ -82,10 +82,10 @@ class Project(models.Model):
           </div>
           <div>
             <span className="text-[11px] font-mono text-[#FF85C0] uppercase tracking-wider block">
-              Django MTV &amp; DRF Structure
+              Proposed Django MTV &amp; DRF Blueprint (Illustrative Demo)
             </span>
             <h2 id="django-modal-title" className="text-2xl font-bold font-['Outfit'] text-white">
-              {lang === 'fa' ? 'معماری و ساختار اپلیکیشن‌های جنگو' : 'Django Modular Architecture'}
+              {lang === 'fa' ? 'طرح معماری پیشنهادی اپلیکیشن‌های جنگو' : 'Proposed Django Architecture'}
             </h2>
           </div>
         </div>
@@ -164,8 +164,8 @@ class Project(models.Model):
           >
             <p>
               {lang === 'fa'
-                ? 'این پورتفولیو با ساختار ماژولار و مطابق با استاندارد رسمی جنگو معماری شده است تا مهاجرت به قالب‌های جنگو (Django Templates) و اتصال به دیتابیس بدون هیچ‌گونه به هم ریختگی بصری انجام پذیرد.'
-                : 'This portfolio is architected following the official modular Django best practices, ensuring a seamless migration path to Django templates and models without modifying visual fidelity.'}
+                ? 'این نسخه فعلی با React، TypeScript و Vite اجرا می‌شود و نمودار زیر به‌عنوان یک طرح معماری پیشنهادی و آموزشی نشان می‌دهد چگونه می‌توان داده‌های همین پورتفولیو را به اپ‌های ماژولار جنگو متصل کرد.'
+                : 'This live site runs as a React + TypeScript + Vite frontend. The blueprint below serves as an illustrative architecture demonstration showing how this portfolio structure maps cleanly onto modular Django apps.'}
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs pt-2">

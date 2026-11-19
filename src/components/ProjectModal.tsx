@@ -2,7 +2,7 @@ import React from 'react';
 import { ProjectItem } from '../data/portfolioData';
 import { TRANSLATIONS, Language } from '../data/translations';
 import { useFocusTrap } from '../hooks/useFocusTrap';
-import { X, ExternalLink, Github, Code, CheckCircle, AlertTriangle } from 'lucide-react';
+import { X, Github, Code, CheckCircle, AlertTriangle } from 'lucide-react';
 
 interface ProjectModalProps {
   project: ProjectItem | null;

@@ -19,7 +19,7 @@ export const AmbientCinematicBackground: React.FC = () => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    let animationFrameId: number;
+    let animationFrameId = 0;
     let width = (canvas.width = canvas.parentElement?.clientWidth || window.innerWidth);
     let height = (canvas.height = canvas.parentElement?.clientHeight || window.innerHeight);
 
@@ -54,10 +54,9 @@ export const AmbientCinematicBackground: React.FC = () => {
       opacity: Math.random() * 0.25 + 0.1,
     }));
 
-    let time = 0;
-
     const render = () => {
-      time += 0.015;
+      animationFrameId = 0;
+      if (document.hidden) return;
       ctx.clearRect(0, 0, width, height);
 
       // 1. Draw Subtle Data Streams
@@ -114,11 +113,28 @@ export const AmbientCinematicBackground: React.FC = () => {
       animationFrameId = requestAnimationFrame(render);
     };
 
-    render();
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        if (animationFrameId !== 0) {
+          cancelAnimationFrame(animationFrameId);
+          animationFrameId = 0;
+        }
+      } else if (animationFrameId === 0) {
+        animationFrameId = requestAnimationFrame(render);
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    if (!document.hidden) {
+      animationFrameId = requestAnimationFrame(render);
+    }
 
     return () => {
       window.removeEventListener('resize', handleResize);
-      cancelAnimationFrame(animationFrameId);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      if (animationFrameId !== 0) {
+        cancelAnimationFrame(animationFrameId);
+      }
     };
   }, [prefersReducedMotion]);
 
